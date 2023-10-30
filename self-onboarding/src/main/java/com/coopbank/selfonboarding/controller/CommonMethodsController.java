@@ -1,9 +1,9 @@
 package com.coopbank.selfonboarding.controller;
 
 
-import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
+
 
 import org.hibernate.service.spi.ServiceException;
 import org.json.JSONException;
@@ -23,15 +23,23 @@ import lombok.extern.slf4j.Slf4j;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-
+//
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPHeader;
 import javax.xml.soap.SOAPMessage;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 import com.coopbank.selfonboarding.request.AccountCreateRequest;
 import com.coopbank.selfonboarding.request.AccountDetailsRequest;
@@ -62,6 +70,8 @@ import com.coopbank.selfonboarding.soa.services.bean.SendSMS;
 import com.coopbank.selfonboarding.soa.services.bean.SigningDetails;
 import com.coopbank.selfonboarding.soa.services.bean.ValidatePin;
 import com.coopbank.selfonboarding.util.CommonMethods;
+
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/common")
