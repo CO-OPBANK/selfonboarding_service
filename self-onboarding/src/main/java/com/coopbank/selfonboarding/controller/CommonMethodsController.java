@@ -4,25 +4,6 @@ package com.coopbank.selfonboarding.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-
-import org.hibernate.service.spi.ServiceException;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.XML;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import org.springframework.web.bind.annotation.*;
-
-import lombok.extern.slf4j.Slf4j;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 //
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPHeader;
@@ -43,7 +24,6 @@ import org.w3c.dom.NodeList;
 
 import com.coopbank.selfonboarding.request.AccountCreateRequest;
 import com.coopbank.selfonboarding.request.AccountDetailsRequest;
-import com.coopbank.selfonboarding.request.ConnectCabinetRequest;
 import com.coopbank.selfonboarding.request.CreateDocumentRequest;
 import com.coopbank.selfonboarding.request.CustomerAccountDetailsInquiryRequest;
 import com.coopbank.selfonboarding.request.CustomerBlacklistRequest;
