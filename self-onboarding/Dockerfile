@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-alpine
+FROM openjdk:11-jdk-alpine
 COPY settings.xml /root/.m2/settings.xml
 EXPOSE 8080
 ARG JAR_FILE=target/*.jar

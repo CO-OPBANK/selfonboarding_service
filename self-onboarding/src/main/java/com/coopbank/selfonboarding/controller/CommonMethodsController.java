@@ -30,11 +30,23 @@ import com.coopbank.selfonboarding.request.CustomerBlacklistRequest;
 import com.coopbank.selfonboarding.request.CustomerDetailsSummaryRequest;
 import com.coopbank.selfonboarding.request.CustomerIDRequest;
 import com.coopbank.selfonboarding.request.IprsRequest;
+import com.coopbank.selfonboarding.request.RetailCustomerCreate;
 import com.coopbank.selfonboarding.request.SanctionDetailsRequest;
 import com.coopbank.selfonboarding.request.SendEmailRequest;
 import com.coopbank.selfonboarding.request.SendSMSRequest;
 import com.coopbank.selfonboarding.request.SigningDetailsRequest;
 import com.coopbank.selfonboarding.request.ValidatePinRequest;
+import com.coopbank.selfonboarding.request.retailCustomerCreate.AddressDetails;
+import com.coopbank.selfonboarding.request.retailCustomerCreate.ContactDetails;
+import com.coopbank.selfonboarding.request.retailCustomerCreate.DemographicInfo;
+import com.coopbank.selfonboarding.request.retailCustomerCreate.DocumentDetails;
+import com.coopbank.selfonboarding.request.retailCustomerCreate.EmploymentDetails;
+import com.coopbank.selfonboarding.request.retailCustomerCreate.InstituteDetails;
+import com.coopbank.selfonboarding.request.retailCustomerCreate.KYCDetails;
+import com.coopbank.selfonboarding.request.retailCustomerCreate.PersonalPartyBasicDetails;
+import com.coopbank.selfonboarding.request.retailCustomerCreate.RelatedBankDetails;
+import com.coopbank.selfonboarding.request.retailCustomerCreate.RelationshipDetails;
+import com.coopbank.selfonboarding.request.retailCustomerCreate.TaxDetails;
 import com.coopbank.selfonboarding.soa.services.bean.AccountCreate;
 import com.coopbank.selfonboarding.soa.services.bean.AccountDetails;
 import com.coopbank.selfonboarding.soa.services.bean.ConnectCabinet;
@@ -1094,6 +1106,22 @@ public class CommonMethodsController {
 
 	}
 	//	----------------------- End CreateDocument ----------------------- //
+	
+	
+	
+//	----------------------- Start Create Document----------------------- //
+	@PostMapping("/RetailCustomerCreate")
+	public ResponseEntity<Object> postCreateRetailCustomer(@RequestBody RetailCustomerCreate retailCustomerCreate) throws Exception {
+		log.info("Request CreateDocument " + retailCustomerCreate.toString());
+	
+		HashMap<String, String> map = new HashMap<>();
+		
+
+		return new ResponseEntity<Object>(map, HttpStatus.OK);
+
+	}
+	//	----------------------- End CreateDocument ----------------------- //
+	
 	
 }
 
