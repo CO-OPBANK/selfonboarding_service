@@ -76,7 +76,7 @@ return soapResponse;
 
 }
     
-    public static SOAPMessage createRetailCustomerSOAPRequest(RetailCustomerCreate retailCustomerCreate, String userId, String retailCustomerCreateEndpoint, String soaUsername, String soaPassword, String soaSystemCode) {
+    public static SOAPMessage createRetailCustomerSOAPRequest(RetailCustomerCreate retailCustomerCreate, String retailCustomerCreateEndpoint, String soaUsername, String soaPassword, String soaSystemCode) {
         SOAPMessage SOAPMessageResponse = null;
 
         Date date = new Date();
@@ -108,14 +108,24 @@ return soapResponse;
             SOAPElement requestHeader = header.addChildElement("RequestHeader", mes);
             SOAPElement creationTimestamp = requestHeader.addChildElement("CreationTimestamp", com);
             SOAPElement correlationID = requestHeader.addChildElement("CorrelationID", com);
-            SOAPElement messageID = requestHeader.addChildElement("MessageID", com);
-            SOAPElement credentials = requestHeader.addChildElement("Credentials", com);
-            SOAPElement systemCode = credentials.addChildElement("SystemCode", com);
+            SOAPElement messageID = requestHeader.addChildElement("MessageID", mes);
+            SOAPElement credentials = requestHeader.addChildElement("Credentials", mes);
+            SOAPElement systemCode = credentials.addChildElement("SystemCode", mes);
+            SOAPElement userName = credentials.addChildElement("Username", mes);
+            SOAPElement password = credentials.addChildElement("Password", mes);
+            SOAPElement realm = credentials.addChildElement("Realm", mes);
+            SOAPElement bankid = credentials.addChildElement("BankID", mes);
 
             creationTimestamp.addTextNode(strDate);
             correlationID.addTextNode(reference);
             messageID.addTextNode(reference);
             systemCode.addTextNode(soaSystemCode);
+            userName.addTextNode(soaUsername);
+            password.addTextNode(soaPassword);
+            realm.addTextNode("cc");
+            bankid.addTextNode("01");
+
+
 
             SOAPBody soapBody = envelope.getBody();
          // ...
@@ -156,6 +166,62 @@ return soapResponse;
             personalPartyBasicDetailsElem.addChildElement("MotherMaidenName", post).addTextNode(personalPartyBasicDetails.getMotherMaidenName());
             personalPartyBasicDetailsElem.addChildElement("PhysicalState", post).addTextNode(personalPartyBasicDetails.getPhysicalState());
             personalPartyBasicDetailsElem.addChildElement("PermanentDisabled", post).addTextNode(personalPartyBasicDetails.getPermanentDisabled());
+            personalPartyBasicDetailsElem.addChildElement("CustomerLanguage", post).addTextNode(personalPartyBasicDetails.getCustomerLanguage());
+            personalPartyBasicDetailsElem.addChildElement("MinorIndicator", post).addTextNode(personalPartyBasicDetails.getMinorIndicator());
+            personalPartyBasicDetailsElem.addChildElement("StaffIndicator", post).addTextNode(personalPartyBasicDetails.getStaffIndicator());
+            personalPartyBasicDetailsElem.addChildElement("StaffID", post).addTextNode(personalPartyBasicDetails.getStaffID());
+            personalPartyBasicDetailsElem.addChildElement("NonResidentIndicator", post).addTextNode(personalPartyBasicDetails.getNonResidentIndicator());
+            personalPartyBasicDetailsElem.addChildElement("NRBecomingDate", post).addTextNode(personalPartyBasicDetails.getNrBecomingDate());
+            personalPartyBasicDetailsElem.addChildElement("TaxDeductionTable", post).addTextNode(personalPartyBasicDetails.getTaxDeductionTable());
+            personalPartyBasicDetailsElem.addChildElement("PrimaryServiceCenter", post).addTextNode(personalPartyBasicDetails.getPrimaryServiceCenter());
+            personalPartyBasicDetailsElem.addChildElement("EnableAlerts", post).addTextNode(personalPartyBasicDetails.getEnableAlerts());
+            personalPartyBasicDetailsElem.addChildElement("RelationshipManagerId", post).addTextNode(personalPartyBasicDetails.getRelationshipManagerId());
+            personalPartyBasicDetailsElem.addChildElement("AccessOwnerSegment", post).addTextNode(personalPartyBasicDetails.getAccessOwnerSegment());
+            personalPartyBasicDetailsElem.addChildElement("Segment", post).addTextNode(personalPartyBasicDetails.getSegment());
+            personalPartyBasicDetailsElem.addChildElement("SubSegment", post).addTextNode(personalPartyBasicDetails.getSubSegment());
+            personalPartyBasicDetailsElem.addChildElement("AffiliateToBank", post).addTextNode(personalPartyBasicDetails.getAffiliateToBank());
+            personalPartyBasicDetailsElem.addChildElement("InsiderToBank", post).addTextNode(personalPartyBasicDetails.getInsiderToBank());
+            personalPartyBasicDetailsElem.addChildElement("InsiderRoleIndicator", post).addTextNode(personalPartyBasicDetails.getInsiderRoleIndicator());
+            personalPartyBasicDetailsElem.addChildElement("ReferredBy", post).addTextNode(personalPartyBasicDetails.getReferredBy());
+            personalPartyBasicDetailsElem.addChildElement("ReferralType", post).addTextNode(personalPartyBasicDetails.getReferralType());
+            personalPartyBasicDetailsElem.addChildElement("ComplexTransactionsExpected", post).addTextNode(personalPartyBasicDetails.getComplexTransactionsExpected());
+            personalPartyBasicDetailsElem.addChildElement("Income", post).addTextNode(personalPartyBasicDetails.getIncome());
+            personalPartyBasicDetailsElem.addChildElement("Priority", post).addTextNode(personalPartyBasicDetails.getPriority());
+            personalPartyBasicDetailsElem.addChildElement("RelationshipOpeningDate", post).addTextNode(personalPartyBasicDetails.getRelationshipOpeningDate());
+            personalPartyBasicDetailsElem.addChildElement("SectorCode", post).addTextNode(personalPartyBasicDetails.getSectorCode());
+            personalPartyBasicDetailsElem.addChildElement("SubSectorCode", post).addTextNode(personalPartyBasicDetails.getSubSectorCode());
+            personalPartyBasicDetailsElem.addChildElement("RiskRating", post).addTextNode(personalPartyBasicDetails.getRiskRating());
+            personalPartyBasicDetailsElem.addChildElement("CustomerStatus", post).addTextNode(personalPartyBasicDetails.getCustomerStatus());
+            personalPartyBasicDetailsElem.addChildElement("CustomerId", post).addTextNode(personalPartyBasicDetails.getCustomerId());
+            personalPartyBasicDetailsElem.addChildElement("CBKSector", post).addTextNode(personalPartyBasicDetails.getCbkSector());
+            personalPartyBasicDetailsElem.addChildElement("CBKSubSector", post).addTextNode(personalPartyBasicDetails.getCbkSubSector());
+            personalPartyBasicDetailsElem.addChildElement("ContactPersonName", post).addTextNode(personalPartyBasicDetails.getContactPersonName());
+            personalPartyBasicDetailsElem.addChildElement("ContactPersonPhone", post).addTextNode(personalPartyBasicDetails.getContactPersonPhone());
+            personalPartyBasicDetailsElem.addChildElement("ContactPersonEmail", post).addTextNode(personalPartyBasicDetails.getContactPersonEmail());
+            personalPartyBasicDetailsElem.addChildElement("ContactPersonAddress", post).addTextNode(personalPartyBasicDetails.getContactPersonAddress());
+            personalPartyBasicDetailsElem.addChildElement("PEPAssociate", post).addTextNode(personalPartyBasicDetails.getPepAssociate());
+            personalPartyBasicDetailsElem.addChildElement("PEPName", post).addTextNode(personalPartyBasicDetails.getPepName());
+            personalPartyBasicDetailsElem.addChildElement("PEPRole", post).addTextNode(personalPartyBasicDetails.getPepRole());
+            personalPartyBasicDetailsElem.addChildElement("FatcaStatus", post).addTextNode(personalPartyBasicDetails.getFatcaStatus());
+            personalPartyBasicDetailsElem.addChildElement("TotalHouseldIncome", post).addTextNode(personalPartyBasicDetails.getTotalHouseholdIncome());
+            personalPartyBasicDetailsElem.addChildElement("AgentCode", post).addTextNode(personalPartyBasicDetails.getAgentCode());
+            personalPartyBasicDetailsElem.addChildElement("AROCode", post).addTextNode(personalPartyBasicDetails.getAroCode());
+            personalPartyBasicDetailsElem.addChildElement("PreferredLanguage", post).addTextNode(personalPartyBasicDetails.getPreferredLanguage());
+            personalPartyBasicDetailsElem.addChildElement("PreferredChannelForCommunication", post).addTextNode(personalPartyBasicDetails.getPreferredChannelForCommunication());
+            personalPartyBasicDetailsElem.addChildElement("NextOfKinPostalOrMailingAddress", post).addTextNode(personalPartyBasicDetails.getNextOfKinPostalOrMailingAddress());
+            personalPartyBasicDetailsElem.addChildElement("NextOfKinPhone", post).addTextNode(personalPartyBasicDetails.getNextOfKinPhone());
+            personalPartyBasicDetailsElem.addChildElement("NextOfKinName", post).addTextNode(personalPartyBasicDetails.getNextOfKinName());
+            personalPartyBasicDetailsElem.addChildElement("NextOfKinIdentificationNo", post).addTextNode(personalPartyBasicDetails.getNextOfKinIdentificationNo());
+            personalPartyBasicDetailsElem.addChildElement("NextOfKinEmailAddress", post).addTextNode(personalPartyBasicDetails.getNextOfKinEmailAddress());
+            personalPartyBasicDetailsElem.addChildElement("RelationshipWithNextOfKin", post).addTextNode(personalPartyBasicDetails.getRelationshipWithNextOfKin());
+            personalPartyBasicDetailsElem.addChildElement("IncomerRange", post).addTextNode(personalPartyBasicDetails.getIncomerRange());
+            personalPartyBasicDetailsElem.addChildElement("ConstitutionCode", post).addTextNode(personalPartyBasicDetails.getConstitutionCode());
+            personalPartyBasicDetailsElem.addChildElement("AccountUsedForBusinessPurpose", post).addTextNode(personalPartyBasicDetails.getAccountUsedForBusinessPurpose());
+            personalPartyBasicDetailsElem.addChildElement("BusinessName", post).addTextNode(personalPartyBasicDetails.getBusinessName());
+            personalPartyBasicDetailsElem.addChildElement("BusinesIndicator", post).addTextNode(personalPartyBasicDetails.getBusinesIndicator());
+            personalPartyBasicDetailsElem.addChildElement("MajorSuppliers", post).addTextNode(personalPartyBasicDetails.getMajorSuppliers());
+            personalPartyBasicDetailsElem.addChildElement("BusinessOperation", post).addTextNode(personalPartyBasicDetails.getBusinessOperation());
+            personalPartyBasicDetailsElem.addChildElement("CountryOfBirth", post).addTextNode(personalPartyBasicDetails.getCountryOfBirth());
 
 
             // ...
@@ -210,9 +276,31 @@ return soapResponse;
                 contactDetailElem.addChildElement("PhoneNumberCountryCode", post).addTextNode(contactDetail.getPhoneNumberCountryCode());
                 contactDetailElem.addChildElement("ContactType", post).addTextNode(contactDetail.getContactType());
                 contactDetailElem.addChildElement("EmailID", post).addTextNode(contactDetail.getEmailID());
-                contactDetailElem.addChildElement("PhoneNo", post).addTextNode(contactDetail.getPhoneNumberCountryCode());
+                contactDetailElem.addChildElement("PhoneNo", post).addTextNode(contactDetail.getPhoneNo());
               
             }
+            
+        	DocumentDetails documentDetails = retailCustomerCreate.getDocumentDetails();
+
+			// Create DocumentDetails element
+			SOAPElement documentDetailsElem = retailCustomerCreateRq.addChildElement("DocumentDetails", post);
+
+			// Create DocumentDetail element
+			SOAPElement documentDetailElem = documentDetailsElem.addChildElement("DocumentDetail", post);
+
+			// Add elements for DocumentDetail (include all elements)
+			documentDetailElem.addChildElement("PreferredUniqueIdIndicator", post).addTextNode(documentDetails.getDocumentDetail().getPreferredUniqueIdIndicator());
+			documentDetailElem.addChildElement("DocumentTypeCode", post).addTextNode(documentDetails.getDocumentDetail().getDocumentTypeCode());
+			documentDetailElem.addChildElement("DocumentCategory", post).addTextNode(documentDetails.getDocumentDetail().getDocumentCategory());
+			documentDetailElem.addChildElement("CountryOfIssue", post).addTextNode(documentDetails.getDocumentDetail().getCountryOfIssue());
+			documentDetailElem.addChildElement("IssueAuthority", post).addTextNode(documentDetails.getDocumentDetail().getIssueAuthority());
+			documentDetailElem.addChildElement("DocumentReferenceNumber", post).addTextNode(documentDetails.getDocumentDetail().getDocumentReferenceNumber());
+			documentDetailElem.addChildElement("IsDocumentVerified", post).addTextNode(documentDetails.getDocumentDetail().getIsDocumentVerified());
+			documentDetailElem.addChildElement("DocumentIssuedDate", post).addTextNode(documentDetails.getDocumentDetail().getDocumentIssuedDate());
+			documentDetailElem.addChildElement("DocumentExpiryDate", post).addTextNode(documentDetails.getDocumentDetail().getDocumentExpiryDate());
+			documentDetailElem.addChildElement("PlaceOfIssue", post).addTextNode(documentDetails.getDocumentDetail().getPlaceOfIssue());
+			documentDetailElem.addChildElement("IDIssuedOrganisation", post).addTextNode(documentDetails.getDocumentDetail().getIdIssuedOrganisation());
+
             // ...
 
          // ...
@@ -224,7 +312,7 @@ return soapResponse;
             RelationshipDetail relationshipDetail = relationshipDetails.getRelationshipDetail();
 
             // Create RelationshipDetail element
-            SOAPElement relationshipDetailElem = relationshipDetailsElem.addChildElement("RelationshipDetail");
+            SOAPElement relationshipDetailElem = relationshipDetailsElem.addChildElement("RelationshipDetail", post);
 
             // Add elements for RelationshipDetail
             relationshipDetailElem.addChildElement("RelatedEntityType", post).addTextNode(relationshipDetail.getRelatedEntityType());
@@ -235,6 +323,8 @@ return soapResponse;
             relationshipDetailElem.addChildElement("PercentageOfShareHolding", post).addTextNode(relationshipDetail.getPercentageOfShareHolding());
             relationshipDetailElem.addChildElement("GuardCode", post).addTextNode(relationshipDetail.getGuardCode());
             relationshipDetailElem.addChildElement("ShareHolderType", post).addTextNode(relationshipDetail.getShareHolderType());
+            
+            
           
             // ...
 
@@ -250,7 +340,7 @@ return soapResponse;
             relatedBankDetailsElem.addChildElement("BranchID", post).addTextNode(relatedBankDetails.getBranchID());
             relatedBankDetailsElem.addChildElement("ProductType", post).addTextNode(relatedBankDetails.getProductType());
             relatedBankDetailsElem.addChildElement("AccountNumber", post).addTextNode(relatedBankDetails.getAccountNumber());
-            relatedBankDetailsElem.addChildElement("RelationshipStartdate", post).addTextNode(relatedBankDetails.getRelationshipStartdate());
+            //relatedBankDetailsElem.addChildElement("RelationshipStartdate", post).addTextNode(relatedBankDetails.getRelationshipStartdate());
             relatedBankDetailsElem.addChildElement("ReasonForContinuing", post).addTextNode(relatedBankDetails.getReasonForContinuing());
           
             // ...
@@ -266,9 +356,9 @@ return soapResponse;
             instituteDetailsElem.addChildElement("Qualification", post).addTextNode(instituteDetails.getQualification());
             instituteDetailsElem.addChildElement("RegistrationNo", post).addTextNode(instituteDetails.getRegistrationNo());
             instituteDetailsElem.addChildElement("EnrolmentStatus", post).addTextNode(instituteDetails.getEnrolmentStatus());
-            instituteDetailsElem.addChildElement("CourseStartDate", post).addTextNode(instituteDetails.getCourseStartDate());
-            instituteDetailsElem.addChildElement("CourseEndDate", post).addTextNode(instituteDetails.getCourseEndDate());
-            instituteDetailsElem.addChildElement("CertificationDate", post).addTextNode(instituteDetails.getCertificationDate());
+            //instituteDetailsElem.addChildElement("CourseStartDate", post).addTextNode(instituteDetails.getCourseStartDate());
+            //instituteDetailsElem.addChildElement("CourseEndDate", post).addTextNode(instituteDetails.getCourseEndDate());
+            //instituteDetailsElem.addChildElement("CertificationDate", post).addTextNode(instituteDetails.getCertificationDate());
         
             // ...
 
@@ -281,7 +371,7 @@ return soapResponse;
 	         SOAPElement eduDtlsInfoElem = demographicInfoElem.addChildElement("EduDtlsInfo" , post);
 	
 	         // Add elements for EduDtlsInfo (include all elements)
-	         eduDtlsInfoElem.addChildElement("EnrollmentStatusStartDate" , post, post).addTextNode(demographicInfo.getEduDtlsInfo().getEnrollmentStatusStartDate());
+	         eduDtlsInfoElem.addChildElement("EnrollmentStatusStartDate" ,post).addTextNode(demographicInfo.getEduDtlsInfo().getEnrollmentStatusStartDate());
 	         eduDtlsInfoElem.addChildElement("SeparationDate", post).addTextNode(demographicInfo.getEduDtlsInfo().getSeparationDate());
 	         eduDtlsInfoElem.addChildElement("Qualification", post).addTextNode(demographicInfo.getEduDtlsInfo().getQualification());
 	         eduDtlsInfoElem.addChildElement("SchoolCode", post).addTextNode(demographicInfo.getEduDtlsInfo().getSchoolCode());
@@ -308,7 +398,7 @@ return soapResponse;
 	      employmentDetailsElem.addChildElement("EmployerID", post).addTextNode(employmentDetails.getEmployerID());
 	      employmentDetailsElem.addChildElement("Occupation", post).addTextNode(employmentDetails.getOccupation());
 	      employmentDetailsElem.addChildElement("Designation", post).addTextNode(employmentDetails.getDesignation());
-	      employmentDetailsElem.addChildElement("EmploymentStartDate", post).addTextNode(employmentDetails.getEmploymentStartDate());
+	      //employmentDetailsElem.addChildElement("EmploymentStartDate", post).addTextNode(employmentDetails.getEmploymentStartDate());
 	      employmentDetailsElem.addChildElement("Pensioner", post).addTextNode(employmentDetails.getPensioner());
 	      employmentDetailsElem.addChildElement("BankRelationType", post).addTextNode(employmentDetails.getBankRelationType());
 	      employmentDetailsElem.addChildElement("EmployerName", post).addTextNode(employmentDetails.getEmployerName());
@@ -324,15 +414,21 @@ return soapResponse;
 		   SOAPElement kycDetailsElem = retailCustomerCreateRq.addChildElement("KYCDetails", post);
 	
 		   // Add elements for KYCDetails (include all elements)
-		   kycDetailsElem.addChildElement("KYCStatus", post).addTextNode(kycDetails.getKYCStatus());
-		   kycDetailsElem.addChildElement("KYCDate", post).addTextNode(kycDetails.getKYCDate());
-		   kycDetailsElem.addChildElement("SubmittedForKYCIndicator", post).addTextNode(kycDetails.getSubmittedForKYCIndicator());
-		   kycDetailsElem.addChildElement("KYCRecertificationDate", post).addTextNode(kycDetails.getKYCRecertificationDate());
+		   kycDetailsElem.addChildElement("KYCStatus", post).addTextNode(kycDetails.getKycStatus());
+		   //kycDetailsElem.addChildElement("KYCDate", post).addTextNode(kycDetails.getKycDate());
+//		   kycDetailsElem.addChildElement("submittedForKYCIndicator", post).addTextNode(kycDetails.getSubmittedForKYCIndicator());
+		   kycDetailsElem.addChildElement("SubmittedForKYCIndicator", post).addTextNode("");
+		   //kycDetailsElem.addChildElement("KYCRecertificationDate", post).addTextNode(kycDetails.getKycRecertificationDate());
 		   kycDetailsElem.addChildElement("MainSourceOfFunds", post).addTextNode(kycDetails.getMainSourceOfFunds());
 		   kycDetailsElem.addChildElement("OtherSourceOfFunds", post).addTextNode(kycDetails.getOtherSourceOfFunds());
 		   kycDetailsElem.addChildElement("OtherBankName", post).addTextNode(kycDetails.getOtherBankName());
 		   kycDetailsElem.addChildElement("PreferredCommunicationLanguage", post).addTextNode(kycDetails.getPreferredCommunicationLanguage());
 		   kycDetailsElem.addChildElement("CustomerRating", post).addTextNode(kycDetails.getCustomerRating());
+		   
+//		   kycDetailsElem.addChildElement("KYCStatus", post).addTextNode("");
+//		   kycDetailsElem.addChildElement("KYCDate", post).addTextNode("");
+//		   kycDetailsElem.addChildElement("KYCRecertificationDate", post).addTextNode("");
+	
 
 		   // ...
 
@@ -340,6 +436,7 @@ return soapResponse;
 
 			// Create TaxDetails element
 			SOAPElement taxDetailsElem = retailCustomerCreateRq.addChildElement("TaxDetails", post);
+		
 	
 			// Add elements for TaxDetails (include all elements)
 			taxDetailsElem.addChildElement("TaxDeductionTable", post).addTextNode(taxDetails.getTaxDeductionTable());
@@ -348,31 +445,13 @@ return soapResponse;
 			taxDetailsElem.addChildElement("ForeignTaxReportingIndicator", post).addTextNode(taxDetails.getForeignTaxReportingIndicator());
 			taxDetailsElem.addChildElement("ForeignTaxReportinStatus", post).addTextNode(taxDetails.getForeignTaxReportinStatus());
 			taxDetailsElem.addChildElement("ForeignTaxReportingCountry", post).addTextNode(taxDetails.getForeignTaxReportingCountry());
-			taxDetailsElem.addChildElement("ForeignTaxReportingReviewDate", post).addTextNode(taxDetails.getForeignTaxReportingReviewDate());
+			//taxDetailsElem.addChildElement("ForeignTaxReportingReviewDate", post).addTextNode(taxDetails.getForeignTaxReportingReviewDate());
+			
+	
 	
 			// ...
 
-			DocumentDetails documentDetails = retailCustomerCreate.getDocumentDetails();
-
-			// Create DocumentDetails element
-			SOAPElement documentDetailsElem = retailCustomerCreateRq.addChildElement("DocumentDetails", post);
-
-			// Create DocumentDetail element
-			SOAPElement documentDetailElem = documentDetailsElem.addChildElement("DocumentDetail", post);
-
-			// Add elements for DocumentDetail (include all elements)
-			documentDetailElem.addChildElement("PreferredUniqueIdIndicator", post).addTextNode(documentDetails.getDocumentDetail().getPreferredUniqueIdIndicator());
-			documentDetailElem.addChildElement("DocumentTypeCode", post).addTextNode(documentDetails.getDocumentDetail().getDocumentTypeCode());
-			documentDetailElem.addChildElement("DocumentCategory", post).addTextNode(documentDetails.getDocumentDetail().getDocumentCategory());
-			documentDetailElem.addChildElement("CountryOfIssue", post).addTextNode(documentDetails.getDocumentDetail().getCountryOfIssue());
-			documentDetailElem.addChildElement("IssueAuthority", post).addTextNode(documentDetails.getDocumentDetail().getIssueAuthority());
-			documentDetailElem.addChildElement("DocumentReferenceNumber", post).addTextNode(documentDetails.getDocumentDetail().getDocumentReferenceNumber());
-			documentDetailElem.addChildElement("IsDocumentVerified", post).addTextNode(documentDetails.getDocumentDetail().getIsDocumentVerified());
-			documentDetailElem.addChildElement("DocumentIssuedDate", post).addTextNode(documentDetails.getDocumentDetail().getDocumentIssuedDate());
-			documentDetailElem.addChildElement("DocumentExpiryDate", post).addTextNode(documentDetails.getDocumentDetail().getDocumentExpiryDate());
-			documentDetailElem.addChildElement("PlaceOfIssue", post).addTextNode(documentDetails.getDocumentDetail().getPlaceOfIssue());
-			documentDetailElem.addChildElement("IDIssuedOrganisation", post).addTextNode(documentDetails.getDocumentDetail().getIdIssuedOrganisation());
-
+		
 
 			// ...
 
@@ -380,17 +459,32 @@ return soapResponse;
             // Add more elements as necessary
 
             MimeHeaders headers = SOAPMessage.getMimeHeaders();
-            headers.addHeader("SOAPAction", "\"" + "Post" + "\"");
+            headers.addHeader("SOAPAction", "\"" + "Rtcustadd" + "\"");
 
             String authorization = Base64.getEncoder().encodeToString((soaUsername + ":" + soaPassword).getBytes());
             headers.addHeader("Authorization", "Basic " + authorization);
+            
 
             SOAPMessage.saveChanges();
+            
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            try {
+                SOAPMessage.writeTo(out);
+            } catch (IOException ex) {
+                log.error(ex.toString());
+            }
+//            String soapEnv = new String(out.toByteArray());
+            System.out.println("\n--------------------------------- SOAP Request ---------------------------------");
+          
+            log.info("request is " + CommonMethods.soapMessageToString(SOAPMessage));
+
+            log.info("\n--------------------------------- SOAP Request ---------------------------------");
 
             // Send the SOAP request to the desired endpoint
             SOAPMessageResponse = postCreateRetailCustomer(SOAPMessage, retailCustomerCreateEndpoint, soaPassword);
 
             // Handle the response
+            log.info("\n Response  is  for ID  " + SOAPMessageResponse);
 
         } catch (Exception ex) {
             // Handle exceptions

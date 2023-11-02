@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class KYCDetails {
-    private String KYCStatus;
-    private String KYCDate;
+    private String kycStatus;
+    private String kycDate;
     private String SubmittedForKYCIndicator;
-    private String KYCRecertificationDate;
+    private String kycRecertificationDate;
     private String MainSourceOfFunds;
     private String OtherSourceOfFunds;
     private String OtherBankName;

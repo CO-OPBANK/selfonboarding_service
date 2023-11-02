@@ -8,5 +8,6 @@ public class ContactDetail {
     private String phoneNumberCountryCode;
     private String contactType;
     private String emailID;
+    private String phoneNo;
 }
 

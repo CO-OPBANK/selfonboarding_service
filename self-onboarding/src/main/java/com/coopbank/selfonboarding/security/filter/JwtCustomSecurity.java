@@ -32,6 +32,7 @@ public class JwtCustomSecurity {
         this.secret = secret;
     }
 
+    //.antMatchers("/api").hasRole("API"
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -44,7 +45,7 @@ public class JwtCustomSecurity {
                         auth
                                 .antMatchers("/user").hasRole("USER")
                                 .antMatchers("/admin").hasRole("ADMIN")
-                                .antMatchers("/api").hasRole("API")
+                                .antMatchers("/api").permitAll()
                                 .anyRequest().permitAll()
                                 .and()
                                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

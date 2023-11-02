@@ -51,6 +51,7 @@ import com.coopbank.selfonboarding.soa.services.bean.AccountCreate;
 import com.coopbank.selfonboarding.soa.services.bean.AccountDetails;
 import com.coopbank.selfonboarding.soa.services.bean.ConnectCabinet;
 import com.coopbank.selfonboarding.soa.services.bean.CreateDocument;
+import com.coopbank.selfonboarding.soa.services.bean.CreateRetailCustomer;
 import com.coopbank.selfonboarding.soa.services.bean.CustomerAccountDetailsInquiry;
 import com.coopbank.selfonboarding.soa.services.bean.CustomerBlacklist;
 import com.coopbank.selfonboarding.soa.services.bean.CustomerDetailsSummary;
@@ -62,6 +63,7 @@ import com.coopbank.selfonboarding.soa.services.bean.SendSMS;
 import com.coopbank.selfonboarding.soa.services.bean.SigningDetails;
 import com.coopbank.selfonboarding.soa.services.bean.ValidatePin;
 import com.coopbank.selfonboarding.util.CommonMethods;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -150,13 +152,19 @@ public class CommonMethodsController {
 	@Value("${api.CONNECTCABINET.PASSWORD}")
 	String connectCabinetPassword;
 	
+	@Value("${api.RETAILCUSTOMERCREATE.ENDPOINT_URL}")
+	String retailCustomerCreateEndpoint;
+	
+	ObjectMapper objectMapper = new ObjectMapper();
+	
 	
 
 //	----------------------- Start IPRS Details ----------------------- //
 	public static int INDENTATION = 4;
 	@PostMapping("/iprsDetails")
 	public ResponseEntity<Object> postIprsDetails(@RequestBody IprsRequest iprsData) throws Exception {
-		log.info("Request IPRS " + iprsData.toString());
+		String requestJson = objectMapper.writeValueAsString(iprsData);
+		log.info("Request IPRS " + requestJson);
 		Map<String, Object> map = new HashMap<String, Object>();
 		SOAPMessage soapResponse = IprsApis.getKslIprsDetails(iprsUserName,iprsPassword,iprsData.getDoc_type(), iprsData.getDoc_number(), iprsData.getSerial_number(),iprsEndpoint,soaUsername,soaPassword,soaSystemCode);
 		String status = "";
@@ -231,7 +239,8 @@ public class CommonMethodsController {
 //	----------------------- Start Blacklist Details ----------------------- //
 	@GetMapping("/blacklistDetails")
 	public ResponseEntity<Object> getblacklistDetails(@RequestBody CustomerBlacklistRequest blacklistData) throws Exception {
-		log.info("Request blacklistData " + blacklistData.toString());
+		String requestJson = objectMapper.writeValueAsString(blacklistData);
+		log.info("Request blacklistData " + requestJson);
 		HashMap<String, String> map = new HashMap<>();
 		SOAPMessage soapResponse = CustomerBlacklist.getCustomerBlacklistDetails(blacklistData.getIdentificationType(), blacklistData.getIdentificationNumber(),blacklistEndpoint,soaUsername,soaPassword,soaSystemCode);
 		String status = "";
@@ -305,7 +314,8 @@ public class CommonMethodsController {
 //	----------------------- Start CustomerID Details ----------------------- //
 	@GetMapping("/CustomerIDData")
 	public ResponseEntity<Object> getCustomerIDData(@RequestBody CustomerIDRequest ncustomerIDData) throws Exception {
-		log.info("Request customerIDData " + ncustomerIDData.toString());
+		String requestJson = objectMapper.writeValueAsString(ncustomerIDData);
+		log.info("Request customerIDData " + requestJson);
 		HashMap<String, String> map = new HashMap<>();
 		SOAPMessage soapResponse = CustomerID.getCustomerIDDetails(ncustomerIDData.getUniqueIdentifierType(),ncustomerIDData.getUniqueIdentifierValue(),customerIDEndpoint,soaUsername,soaPassword,soaSystemCode);
 
@@ -366,7 +376,8 @@ public class CommonMethodsController {
 //	----------------------- Start SendSMS Details ----------------------- //
 	@PostMapping("/Sendsms")
 	public ResponseEntity<Object> postSendSMSReq(@RequestBody SendSMSRequest sendSMSData) throws Exception {
-		log.info("Request sendSMSData " + sendSMSData.toString());
+		String requestJson = objectMapper.writeValueAsString(sendSMSData);
+		log.info("Request sendSMSData " + requestJson);
 		HashMap<String, String> map = new HashMap<>();
 		SOAPMessage soapResponse = SendSMS.postSendSMS(smsUsername,smsPassword,smsEncryped,smsClientID,sendSMSData.getReqmessage(),sendSMSData.getReqmsisdn(),smsEndpoint,soaUsername,soaPassword,soaSystemCode);
         
@@ -415,7 +426,8 @@ public class CommonMethodsController {
 //	----------------------- Start ValidatePin Details ----------------------- //
 	@GetMapping("/validatepin")
 	public ResponseEntity<Object> getValidatePinData(@RequestBody ValidatePinRequest validatePinData) throws Exception {
-		log.info("Request validatePinData " + validatePinData.toString());
+		String requestJson = objectMapper.writeValueAsString(validatePinData);
+		log.info("Request validatePinData " + requestJson);
 		HashMap<String, String> map = new HashMap<>();
 		SOAPMessage soapResponse = ValidatePin.getKslValidatePin(validatePinData.getIdNumber(),validatePinData.getTaxPayerType(),kraEndpoint,soaUsername,soaPassword,soaSystemCode);
 
@@ -475,7 +487,8 @@ public class CommonMethodsController {
 //	----------------------- Start SendEmail Details ----------------------- //
 	@PostMapping("/sendemail")
 	public ResponseEntity<Object> postSendEmailReq(@RequestBody SendEmailRequest sendEmailData) throws Exception {
-		log.info("Request sendEmailData " + sendEmailData.toString());
+		String requestJson = objectMapper.writeValueAsString(sendEmailData);
+		log.info("Request sendEmailData " + requestJson);
 		HashMap<String, String> map = new HashMap<>();
 		SOAPMessage soapResponse = SendEmail.postKslSendEmail(sendEmailData.getFrom(),sendEmailData.getTo(),sendEmailData.getMessage(),sendEmailData.getSubject(),emailEndpoint,soaUsername,soaPassword,soaSystemCode);
 		
@@ -529,7 +542,8 @@ public class CommonMethodsController {
 //	----------------------- Start AccountDetails Details ----------------------- //
 	@GetMapping("/accountDetails")
 	public ResponseEntity<Object> getAccountDetailsData(@RequestBody AccountDetailsRequest AccountDetailsData) throws Exception {
-		log.info("Request AccountDetailsData " + AccountDetailsData.toString());
+		String requestJson = objectMapper.writeValueAsString(AccountDetailsData);
+		log.info("Request AccountDetailsData " + requestJson);
 		HashMap<String, String> map = new HashMap<>();
 		SOAPMessage soapResponse = AccountDetails.getAccountDetailsDetails(AccountDetailsData.getAccountNumber(),accDetailsEndpoint,soaUsername,soaPassword,soaSystemCode);
 		map.put("StatusDescription", "Service timeout");
@@ -589,7 +603,8 @@ public class CommonMethodsController {
 //	----------------------- Start SanctionDetails Details ----------------------- //
 	@PostMapping("/sanctionDetails")
 	public ResponseEntity<Object> postSanctionDetails(@RequestBody SanctionDetailsRequest sanctionDetailsData) throws Exception {
-		log.info("Request sanctionDetailsData " + sanctionDetailsData.toString());
+		String requestJson = objectMapper.writeValueAsString(sanctionDetailsData);
+		log.info("Request sanctionDetailsData " + requestJson);
 //		log.debug("Start Account Balance " + iprsData.getPass());
 //		HashMap<String, Object> map = new HashMap<>();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -682,7 +697,8 @@ public class CommonMethodsController {
 //	----------------------- Start Customer Account Details Inquiry ----------------------- //
 	@GetMapping("/CustomerAccountDetailsInquiry")
 	public ResponseEntity<Object> getCustomerAccountDetailsInquiryData(@RequestBody CustomerAccountDetailsInquiryRequest custAccDetailsInqReqData) throws Exception {
-		log.info("Request CustomerAccountDetailsInquiryData " + custAccDetailsInqReqData.toString());
+		String requestJson = objectMapper.writeValueAsString(custAccDetailsInqReqData);
+		log.info("Request CustomerAccountDetailsInquiryData " + requestJson);
 		HashMap<String, String> map = new HashMap<>();
 		SOAPMessage soapResponse = CustomerAccountDetailsInquiry.getCustomerAccountDetailsInquiry(custAccDetailsInqReqData.getCustomerId(),customerDetailsInquiryEndpoint,soaUsername,soaPassword,soaSystemCode);
 
@@ -754,7 +770,8 @@ public class CommonMethodsController {
 //	----------------------- Start Customer Details Summary ----------------------- //
 	@GetMapping("/CustomerDetailsSummary")
 	public ResponseEntity<Object> getCustomerAccountSummaryData(@RequestBody CustomerDetailsSummaryRequest custAccSummaryReqData) throws Exception {
-		log.info("Request CustomerAccountDetailsInquiryData " + custAccSummaryReqData.toString());
+		String requestJson = objectMapper.writeValueAsString(custAccSummaryReqData);
+		log.info("Request CustomerAccountDetailsInquiryData " + requestJson);
 		HashMap<String, String> map = new HashMap<>();
 		SOAPMessage soapResponse = CustomerDetailsSummary.getcustomerDetailsSummaryReq(custAccSummaryReqData.getCustomerId(),custDetailsSummaryEndpoint,soaUsername,soaPassword,soaSystemCode);
 
@@ -824,7 +841,8 @@ public class CommonMethodsController {
 //	----------------------- Start Account Create ----------------------- //
 	@PostMapping("/AccountCreate")
 	public ResponseEntity<Object> getAccountCreateData(@RequestBody AccountCreateRequest accountCreateReqData) throws Exception {
-		log.info("Request AccountCreate " + accountCreateReqData.toString());
+		String requestJson = objectMapper.writeValueAsString(accountCreateReqData);
+		log.info("Request AccountCreate " + requestJson);
 		HashMap<String, String> map = new HashMap<>();
 		SOAPMessage soapResponse = AccountCreate.getAccountCreateReq(accountCreateReqData,accountCreateEndpoint,soaUsername,soaPassword,soaSystemCode);
 
@@ -893,7 +911,8 @@ public class CommonMethodsController {
 //	----------------------- Start Signing Details ----------------------- //
 	@PostMapping("/SigningDetails")
 	public ResponseEntity<Object> getAccountCreateData(@RequestBody SigningDetailsRequest signingDetailsReqData) throws Exception {
-		log.info("Request SigningDetails " + signingDetailsReqData.toString());
+		String requestJson = objectMapper.writeValueAsString(signingDetailsReqData);
+		log.info("Request SigningDetails " + requestJson);
 		HashMap<String, String> map = new HashMap<>();
 		SOAPMessage soapResponse = SigningDetails.getSigningDetailsReq(signingDetailsReqData,signingDetailsEndpoint,soaUsername,soaPassword,soaSystemCode);
 
@@ -1030,7 +1049,8 @@ public class CommonMethodsController {
 //	----------------------- Start Create Document----------------------- //
 	@PostMapping("/CreateDocument")
 	public ResponseEntity<Object> getCreateDocumentData(@RequestBody CreateDocumentRequest createDocumentReqData) throws Exception {
-		log.info("Request CreateDocument " + createDocumentReqData.toString());
+		String requestJson = objectMapper.writeValueAsString(createDocumentReqData);
+		log.info("Request CreateDocument " + requestJson);
 		HashMap<String, String> map = new HashMap<>();
 		String userId = getConnectCabinetData();
 		if (userId == null) {            
@@ -1112,10 +1132,80 @@ public class CommonMethodsController {
 //	----------------------- Start Create Document----------------------- //
 	@PostMapping("/RetailCustomerCreate")
 	public ResponseEntity<Object> postCreateRetailCustomer(@RequestBody RetailCustomerCreate retailCustomerCreate) throws Exception {
-		log.info("Request CreateDocument " + retailCustomerCreate.toString());
+		
+	    String requestJson = objectMapper.writeValueAsString(retailCustomerCreate);
+
+	    log.info(" JSON Request RetailCustomerCreate: " + requestJson);
+		
 	
 		HashMap<String, String> map = new HashMap<>();
 		
+
+	
+		SOAPMessage soapResponse = CreateRetailCustomer.createRetailCustomerSOAPRequest(retailCustomerCreate,retailCustomerCreateEndpoint,soaUsername,soaPassword,soaSystemCode);
+
+     if (soapResponse == null) {            
+  	   map.put("Status", "false");
+        map.put("StatusDescription", "Failed");
+        map.put("Description", "Null response");
+     } 
+     else {
+     	SOAPHeader header = soapResponse.getSOAPHeader();
+     	
+     	String xmlStringHeader = CommonMethods.convertHeaderString(header);
+     	
+     	
+     	xmlStringHeader = xmlStringHeader.replace("head:",""); 
+     	
+     	String statusDescriptionTag = "StatusDescription";
+         String statusDescriptionRes = xmlStringHeader.split("<"+ statusDescriptionTag +">")[1].split("</"+ statusDescriptionTag+">")[0];
+         
+         String messageDescriptionRes = null;
+         
+         if(statusDescriptionRes.equals("Failed")) {
+	        	String messageDescriptionTag = "MessageDescription";
+	            messageDescriptionRes = xmlStringHeader.split("<"+ messageDescriptionTag +">")[1].split("</"+ messageDescriptionTag+">")[0];
+			}
+        
+
+     	NodeList returnList = (NodeList) header.getElementsByTagName("head:ResponseHeader");
+     	
+     	for (int k = 0; k < returnList.getLength(); k++) {
+     		NodeList innerResultList = returnList.item(k).getChildNodes();
+     		 if (innerResultList.item(3).getNodeName().equalsIgnoreCase("head:StatusDescription")) {
+     			 String statusDesc = String.valueOf(innerResultList.item(3).getTextContent().trim());
+     			 if (statusDesc.equals("Success")) {
+     			SOAPBody sb = soapResponse.getSOAPBody();
+     				 
+   		        String xmlString = CommonMethods.convertToString(sb);
+   		        xmlString=xmlString.replace("xmlns:tns30=\"urn://co-opbank.co.ke/BS/Customer/RetailCustomerCreate/Post.1.0\"","");
+		            xmlString=xmlString.replace("tns30:","");
+		            xmlString=xmlString.replace(" <?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>","");
+   		        log.info(xmlString);
+   		                 
+  		        try {
+  		        	JSONObject jsonObj = XML.toJSONObject(xmlString);
+                     String json = jsonObj.toString(INDENTATION);
+            
+                    map.put("Status", "true");
+                    map.put("StatusDescription", statusDesc);
+                    map.put("Response", json);
+                 
+              } catch (JSONException ex) {
+                  ex.printStackTrace();
+              }
+     			 } else {
+         			 map.put("Status", "false");
+     	             map.put("StatusDescription", statusDesc);
+     	             map.put("Description", messageDescriptionRes);
+                  }
+     		 } else {
+     			 map.put("Status", "false");
+ 	             map.put("StatusDescription", "Failed");
+ 	             map.put("Description", messageDescriptionRes);
+              }
+     	}
+     }
 
 		return new ResponseEntity<Object>(map, HttpStatus.OK);
 
