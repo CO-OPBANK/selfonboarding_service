@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class CustomerDetailsSummaryRequest {
-	public String CustomerId;
+	public String customerId;
 }
 
 

@@ -4,24 +4,24 @@ import lombok.Data;
 
 @Data
 public class AccountCreateRequest {
-	public String SchemeCode;
-	public String Product;
-	public String BranchSortCode;
-	public String Currency;
-	public String CustomerCode;
-	public String SectorCode;
-	public String SubsectorCode;
-	public String PurposeOfAccount;
-	public String WHTTaxIndicator;
-	public String AROCode;
-	public String DSOCode;
-	public String StatementMode;
-	public String StatementFrequency;
-	public String StatementMedium;
-	public String StartDate;
-	public String WeekDay;
-	public String HolidayStatus;
-	public String BusinessEconomicCode;
-	public String SourceOfFunds;
-	public String ProductSegment;
+	public String schemeCode;
+	public String product;
+	public String branchSortCode;
+	public String currency;
+	public String customerCode;
+	public String sectorCode;
+	public String subsectorCode;
+	public String purposeOfAccount;
+	public String wHTTaxIndicator;
+	public String aROCode;
+	public String dSOCode;
+	public String statementMode;
+	public String statementFrequency;
+	public String statementMedium;
+	public String startDate;
+	public String weekDay;
+	public String holidayStatus;
+	public String businessEconomicCode;
+	public String sourceOfFunds;
+	public String productSegment;
 }

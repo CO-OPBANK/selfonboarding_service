@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,10 @@ import com.coopbank.selfonboarding.request.SigningDetailsRequest;
 import com.coopbank.selfonboarding.util.CommonMethods;
 import lombok.extern.slf4j.Slf4j;
 
+import com.coopbank.selfonboarding.request.SigningDetailsData.SignatoryDetails;
+import com.coopbank.selfonboarding.request.createDocumentData.documentData;
+import com.coopbank.selfonboarding.request.createDocumentData.documentDatas;
+import com.coopbank.selfonboarding.request.SigningDetailsData.SignatoryDetail;
 
 @Slf4j
 public class SigningDetails {
@@ -126,26 +131,35 @@ return soapResponse;
             SOAPElement customerNameValue = signingDetailsRq.addChildElement("CustomerName", ns);
             SOAPElement imageAccessCodeValue = signingDetailsRq.addChildElement("ImageAccessCode", ns);
             
-            SOAPElement signatoryDetailsReq = signingDetailsRq.addChildElement("SignatoryDetails", ns);
-            SOAPElement signatoryDetailReq = signatoryDetailsReq.addChildElement("SignatoryDetail", ns);
-            SOAPElement signatureValue = signatoryDetailReq.addChildElement("Signature", ns);
-            SOAPElement photoValue = signatoryDetailReq.addChildElement("Photo", ns);
-            SOAPElement signEffectiveDateValue = signatoryDetailReq.addChildElement("SignEffectiveDate", ns);
-            SOAPElement custNameValue = signatoryDetailReq.addChildElement("custName", ns);
-            SOAPElement remarksValue = signatoryDetailReq.addChildElement("Remarks", ns);
-       
 
+   
+   
             accountNumberValue.addTextNode(signingDetailsReqData.getAccountNumber());
             accountCodeValue.addTextNode("N");
             bankCodeValue.addTextNode(signingDetailsReqData.getBankCode());
             customerNameValue.addTextNode(signingDetailsReqData.getCustomerName());
             imageAccessCodeValue.addTextNode("ALL");
-            signatureValue.addTextNode(signingDetailsReqData.getSignature());
-            photoValue.addTextNode(signingDetailsReqData.getPhoto());
-            signEffectiveDateValue.addTextNode("");
-            custNameValue.addTextNode(signingDetailsReqData.getCustomerName());
-            remarksValue.addTextNode(signingDetailsReqData.getRemarks());
             
+            // ...
+            SignatoryDetails signatoryDetails = signingDetailsReqData.getSignatoryDetails();
+
+            // Create signatoryDetails element
+            SOAPElement signatoryDetailsElem = signingDetailsRq.addChildElement("SignatoryDetails", ns);
+
+
+            List<SignatoryDetail> signatoryDetailList = signatoryDetails.getSignatoryDetail();
+
+            for (SignatoryDetail signatoryDetail : signatoryDetailList) {
+                // Create signatoryDetail element
+                SOAPElement signatoryDetailElem = signatoryDetailsElem.addChildElement("SignatoryDetail", ns);
+
+                // Add elements for signatoryDetail
+                signatoryDetailElem.addChildElement("Signature", ns).addTextNode(signatoryDetail.getSignature());
+                signatoryDetailElem.addChildElement("Photo", ns).addTextNode(signatoryDetail.getPhoto());
+                signatoryDetailElem.addChildElement("SignEffectiveDate", ns).addTextNode(signatoryDetail.getSignEffectiveDate());
+                signatoryDetailElem.addChildElement("Remarks", ns).addTextNode(signatoryDetail.getRemarks());
+              
+            }
 
             MimeHeaders headers = SOAPMessage.getMimeHeaders();
             headers.addHeader("SOAPAction", "\"" + "Post" + "\"");

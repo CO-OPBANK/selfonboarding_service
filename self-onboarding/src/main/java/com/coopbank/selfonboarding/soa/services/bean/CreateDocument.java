@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,10 @@ import javax.xml.soap.SOAPPart;
 import com.coopbank.selfonboarding.request.CreateDocumentRequest;
 import com.coopbank.selfonboarding.util.CommonMethods;
 import lombok.extern.slf4j.Slf4j;
+
+
+import com.coopbank.selfonboarding.request.createDocumentData.documentDatas;
+import com.coopbank.selfonboarding.request.createDocumentData.documentData;
 
 
 @Slf4j
@@ -63,7 +68,6 @@ return soapResponse;
     
     public static SOAPMessage postCreateDocumentReq(CreateDocumentRequest createDocumentReqData,String userId,String createDocumentEndpoint,String soaUsername,String soaPassword,String soaSystemCode) {
         SOAPMessage SOAPMessageResponse = null;
-//        SOAPMessage response = null;
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -93,41 +97,33 @@ return soapResponse;
             SOAPElement soapHeaderElem = header.addChildElement("RequestHeader", ns);
             SOAPElement creationTimestamp = soapHeaderElem.addChildElement("CreationTimestamp", ns);
             SOAPElement correlationID = soapHeaderElem.addChildElement("CorrelationID", ns);
-//            SOAPElement faultTO = soapHeaderElem.addChildElement("FaultTO", ns);
             SOAPElement messageID = soapHeaderElem.addChildElement("MessageID", ns);
-//            SOAPElement replyTO = soapHeaderElem.addChildElement("ReplyTO", ns);
             SOAPElement credentialss = soapHeaderElem.addChildElement("Credentials", ns);
 
             SOAPElement systemCode = credentialss.addChildElement("SystemCode", ns);
-//            SOAPElement userName = credentialss.addChildElement("Username", ns);
-//            SOAPElement password = credentialss.addChildElement("Password", ns);
-//            SOAPElement realm = credentialss.addChildElement("Realm", ns);
+
 
             creationTimestamp.addTextNode(strDate);
             correlationID.addTextNode(reference);
-//            faultTO.addTextNode("http");
-//            replyTO.addTextNode("http");
             messageID.addTextNode(reference);
             systemCode.addTextNode(soaSystemCode);
-//            userName.addTextNode(soaUsername);
-//            password.addTextNode(soaPassword);
-//            realm.addTextNode("cc");
+
 
             SOAPBody soapBody = envelope.getBody();
 
             SOAPElement postInputRq = soapBody.addChildElement("PostInput", body);
             
             SOAPElement cabinetName = postInputRq.addChildElement("cabinetName", body);
-            cabinetName.addTextNode("coopcabuat");
+            cabinetName.addTextNode(createDocumentReqData.getCabinetName());
 
             SOAPElement documentPath = postInputRq.addChildElement("documentPath", body);
             documentPath.addTextNode("");
 
             SOAPElement parentFolderIndex = postInputRq.addChildElement("parentFolderIndex", body);
-            parentFolderIndex.addTextNode("1273");
+            parentFolderIndex.addTextNode(createDocumentReqData.getParentFolderIndex());
 
             SOAPElement documentName = postInputRq.addChildElement("documentName",body);
-            documentName.addTextNode("Sample-image.png");
+            documentName.addTextNode(createDocumentReqData.getDocumentName());
 
             SOAPElement userDBId = postInputRq.addChildElement("userDBId",body);
             userDBId.addTextNode(userId);
@@ -187,17 +183,33 @@ return soapResponse;
             SOAPElement document = postInputRq.addChildElement("document",body);
             document.addTextNode(createDocumentReqData.getDocument());
             
-//            SOAPElement NGOAddDocDataDefCriteriaDataBDO = postInputRq.addChildElement("NGOAddDocDataDefCriteriaDataBDO",body);
-//            SOAPElement indexType = NGOAddDocDataDefCriteriaDataBDO.addChildElement("indexType",body);
-//            indexType.addTextNode("");
-//            SOAPElement indexValue = NGOAddDocDataDefCriteriaDataBDO.addChildElement("indexValue",body);
-//            indexValue.addTextNode("");
-            
+            // ...
+            documentDatas documentDatas = createDocumentReqData.getDocumentDatas();
+
+            // Create documentDatas element
+            SOAPElement documentDatasElem = postInputRq.addChildElement("NGOAddDocDataDefCriterionBDO", body);
+
+            // Add elements for documentDatas
+            documentDatasElem.addChildElement("dataDefIndex", body).addTextNode(documentDatas.getDataDefIndex());
+            documentDatasElem.addChildElement("dataDefName", body).addTextNode(documentDatas.getDataDefName());
+
+            List<documentData> documentDataList = documentDatas.getDocumentData();
+
+            for (documentData documentData : documentDataList) {
+                // Create documentData element
+                SOAPElement documentDataElem = documentDatasElem.addChildElement("NGOAddDocDataDefCriteriaDataBDO", body);
+
+                // Add elements for documentData
+                documentDataElem.addChildElement("indexId", body).addTextNode(documentData.getIndexId());
+                documentDataElem.addChildElement("indexType", body).addTextNode(documentData.getIndexType());
+                documentDataElem.addChildElement("indexValue", body).addTextNode(documentData.getIndexValue());
+              
+            }
+       
             SOAPElement NGOAddDocKeywordsCriterionBDO = postInputRq.addChildElement("NGOAddDocKeywordsCriterionBDO",body);
             SOAPElement keyword = NGOAddDocKeywordsCriterionBDO.addChildElement("keyword",body);
             keyword.addTextNode("");
-            
-
+          
             MimeHeaders headers = SOAPMessage.getMimeHeaders();
             headers.addHeader("SOAPAction", "\"" + "Post" + "\"");
 

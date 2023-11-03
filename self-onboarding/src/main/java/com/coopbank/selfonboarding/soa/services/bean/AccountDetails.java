@@ -120,15 +120,9 @@ return soapResponse;
 
             SOAPElement accountDetailsRequestTag = soapBody.addChildElement("AccountDetailsRequest", bsac);
             SOAPElement accountNumberTag = accountDetailsRequestTag.addChildElement("AccountNumber", bsac);
-            SOAPElement accountSchemeTypeTag = accountDetailsRequestTag.addChildElement("AccountSchemeType", bsac);
-            SOAPElement accountOpeningDateTag = accountDetailsRequestTag.addChildElement("AccountOpeningDate", bsac);
-            SOAPElement accountDocIndexTag = accountDetailsRequestTag.addChildElement("AccountDocIndex", bsac);
        
 
             accountNumberTag.addTextNode(accountNumber);
-            accountSchemeTypeTag.addTextNode("");
-            accountOpeningDateTag.addTextNode("");
-            accountDocIndexTag.addTextNode("");
 
             MimeHeaders headers = SOAPMessage.getMimeHeaders();
             headers.addHeader("SOAPAction", "\"" + "GetAccountDetails" + "\"");

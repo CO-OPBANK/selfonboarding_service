@@ -312,7 +312,7 @@ public class CommonMethodsController {
 	
 	
 //	----------------------- Start CustomerID Details ----------------------- //
-	@GetMapping("/CustomerIDData")
+	@GetMapping("/CustomerID")
 	public ResponseEntity<Object> getCustomerIDData(@RequestBody CustomerIDRequest ncustomerIDData) throws Exception {
 		String requestJson = objectMapper.writeValueAsString(ncustomerIDData);
 		log.info("Request customerIDData " + requestJson);
@@ -325,8 +325,27 @@ public class CommonMethodsController {
            map.put("Description", "Null response");
         } 
         else {
-        	SOAPHeader header = soapResponse.getSOAPHeader();
-        	NodeList returnList = (NodeList) header.getElementsByTagName("head:ResponseHeader");
+        	
+         	SOAPHeader header = soapResponse.getSOAPHeader();
+         	
+         	String xmlStringHeader = CommonMethods.convertHeaderString(header);
+         	
+         	
+         	xmlStringHeader = xmlStringHeader.replace("head:",""); 
+         	
+         	String statusDescriptionTag = "StatusDescription";
+             String statusDescriptionRes = xmlStringHeader.split("<"+ statusDescriptionTag +">")[1].split("</"+ statusDescriptionTag+">")[0];
+             
+             String messageDescriptionRes = null;
+             
+             if(statusDescriptionRes.equals("Failed")) {
+    	        	String messageDescriptionTag = "MessageDescription";
+    	            messageDescriptionRes = xmlStringHeader.split("<"+ messageDescriptionTag +">")[1].split("</"+ messageDescriptionTag+">")[0];
+    			}
+            
+
+         	NodeList returnList = (NodeList) header.getElementsByTagName("head:ResponseHeader");
+
         
         	for (int k = 0; k < returnList.getLength(); k++) {
         		NodeList innerResultList = returnList.item(k).getChildNodes();
@@ -356,13 +375,13 @@ public class CommonMethodsController {
                  }
         			 } else {
             			 map.put("Status", "false");
-        	             map.put("StatusDescription", statusDesc);
-        	             map.put("Description", "We got an invalid Response");
+        	             map.put("StatusDescription", statusDescriptionRes);
+        	             map.put("Description", messageDescriptionRes);
                      }
         		 } else {
         			 map.put("Status", "false");
     	             map.put("StatusDescription", "Failed");
-    	             map.put("Description", "We got an invalid Response");
+    	             map.put("Description", messageDescriptionRes);
                  }
         	}
         }
@@ -554,8 +573,24 @@ public class CommonMethodsController {
         } 
         else {
         	SOAPHeader header = soapResponse.getSOAPHeader();
-        	NodeList returnList = (NodeList) header.getElementsByTagName("head:ResponseHeader");
-        
+         	
+         	String xmlStringHeader = CommonMethods.convertHeaderString(header);
+         	
+         	
+         	xmlStringHeader = xmlStringHeader.replace("head:",""); 
+         	
+         	String statusDescriptionTag = "StatusDescription";
+             String statusDescriptionRes = xmlStringHeader.split("<"+ statusDescriptionTag +">")[1].split("</"+ statusDescriptionTag+">")[0];
+             
+             String messageDescriptionRes = null;
+             
+             if(statusDescriptionRes.equals("Failed")) {
+    	        	String messageDescriptionTag = "MessageDescription";
+    	            messageDescriptionRes = xmlStringHeader.split("<"+ messageDescriptionTag +">")[1].split("</"+ messageDescriptionTag+">")[0];
+    			}
+            
+
+         	NodeList returnList = (NodeList) header.getElementsByTagName("head:ResponseHeader");
         	for (int k = 0; k < returnList.getLength(); k++) {
         		NodeList innerResultList = returnList.item(k).getChildNodes();
         		 if (innerResultList.item(3).getNodeName().equalsIgnoreCase("head:StatusDescription")) {
@@ -569,34 +604,33 @@ public class CommonMethodsController {
       		        xmlString=xmlString.replace("xmlns:tns25\"urn://co-opbank.co.ke/BS/Account/BSAccountDetails.3.0\"","");
   		            xmlString=xmlString.replace("tns25:","");
      		            
-     		        try {
-                     JSONObject jsonObj = XML.toJSONObject(xmlString);
-                     String json = jsonObj.toString(INDENTATION);
-            
-                    map.put("Status", "true");
-                    map.put("StatusDescription", statusDesc);
-                    map.put("Response", json);
-      		        log.info(json);
-                    
-                 } catch (JSONException ex) {
-                     ex.printStackTrace();
-                 }
-        			 } else {
-            			 map.put("Status", "false");
-        	             map.put("StatusDescription", statusDesc);
-        	             map.put("Description", "We got an invalid Response");
-                     }
-        		 } else {
-        			 map.put("Status", "false");
-    	             map.put("StatusDescription", "Failed");
-    	             map.put("Description", "We got an invalid Response");
-                 }
-        	}
-        }
+  		          try {
+    		        	JSONObject jsonObj = XML.toJSONObject(xmlString);
+                       String json = jsonObj.toString(INDENTATION);
+              
+                      map.put("Status", "true");
+                      map.put("StatusDescription", statusDesc);
+                      map.put("Response", json);
+                   
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
+       			 } else {
+           			 map.put("Status", "false");
+       	             map.put("StatusDescription", statusDesc);
+       	             map.put("Description", messageDescriptionRes);
+                    }
+       		 } else {
+       			 map.put("Status", "false");
+   	             map.put("StatusDescription", "Failed");
+   	             map.put("Description", messageDescriptionRes);
+                }
+       	}
+       }
 
-		return new ResponseEntity<Object>(map, HttpStatus.OK);
+  		return new ResponseEntity<Object>(map, HttpStatus.OK);
 
-	}
+  	}
 //	----------------------- End AccountDetails Details ----------------------- //
 	
 	
@@ -605,20 +639,14 @@ public class CommonMethodsController {
 	public ResponseEntity<Object> postSanctionDetails(@RequestBody SanctionDetailsRequest sanctionDetailsData) throws Exception {
 		String requestJson = objectMapper.writeValueAsString(sanctionDetailsData);
 		log.info("Request sanctionDetailsData " + requestJson);
-//		log.debug("Start Account Balance " + iprsData.getPass());
-//		HashMap<String, Object> map = new HashMap<>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		SOAPMessage soapResponse = SanctionDetails.getCustomerSanctionDetails(sanctionDetailsData.getMinMatchScore(),sanctionDetailsData.getCustomerType(),sanctionDetailsData.getFullName(),sanctionDetailsData.getFirstName(),sanctionDetailsData.getMiddleName(),sanctionDetailsData.getLastName(),sanctionDetailsData.getIdentificationDocType(),sanctionDetailsData.getIdentificationDocNo(),sanctionDetailsData.getNationality(),sanctionDetailsData.getDateOfBirth(),sanctionDetailsData.getCountryOfBirth(),sanctionDetailsEndpoint,sanctionUserName,sanctionPassword,soaSystemCode);
-		String status = "";
 
         String Description = "";
         if (soapResponse == null) {
-            status = "3";
-            Description = "Failed to get response From Core Banking ";
-            log.debug("We got a Null SoapResponse from Sanction Details API Call");
-            
-            map.put("status", status);
-            map.put("Description", Description);
+            map.put("status", "false");
+            map.put("StatusDescription", "Failed");
+            map.put("Description", "Failed to get response From Core Banking ");
         } 
         else {
         	SOAPHeader header = soapResponse.getSOAPHeader();
@@ -668,10 +696,8 @@ public class CommonMethodsController {
                            } catch (JSONException ex) {
                                ex.printStackTrace();
                            }
-        		            
-                           
         			 } else {
-        				 
+        				
         				 map.put("Status", "false");
                          map.put("StatusDescription", statusDesc);
                          map.put("MessageDescription", messageDescriptionRes);
@@ -1129,7 +1155,7 @@ public class CommonMethodsController {
 	
 	
 	
-//	----------------------- Start Create Document----------------------- //
+//	----------------------- Start Create Retail Customer ----------------------- //
 	@PostMapping("/RetailCustomerCreate")
 	public ResponseEntity<Object> postCreateRetailCustomer(@RequestBody RetailCustomerCreate retailCustomerCreate) throws Exception {
 		
@@ -1210,7 +1236,7 @@ public class CommonMethodsController {
 		return new ResponseEntity<Object>(map, HttpStatus.OK);
 
 	}
-	//	----------------------- End CreateDocument ----------------------- //
+	//	----------------------- End Create Retail Customer ----------------------- //
 	
 	
 }

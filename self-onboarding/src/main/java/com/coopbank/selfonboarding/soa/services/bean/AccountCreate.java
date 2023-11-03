@@ -120,56 +120,27 @@ return soapResponse;
 
             SOAPElement AccountCreateRq = soapBody.addChildElement("AccountCreateRequest", ns);
             
-            SOAPElement schemeCodeValue = AccountCreateRq.addChildElement("SchemeCode", ns);
-            SOAPElement productValue = AccountCreateRq.addChildElement("Product", ns);
-            SOAPElement branchSortCodeValue = AccountCreateRq.addChildElement("BranchSortCode", ns);
-            SOAPElement currencyValue = AccountCreateRq.addChildElement("Currency", ns);
-            SOAPElement customerCodeValue = AccountCreateRq.addChildElement("CustomerCode", ns);
-            
-            SOAPElement sectorCodeValue = AccountCreateRq.addChildElement("SectorCode", ns);
-            SOAPElement subsectorCodeValue = AccountCreateRq.addChildElement("SubsectorCode", ns);
-            SOAPElement purposeOfAccountValue = AccountCreateRq.addChildElement("PurposeOfAccount", ns);
-            SOAPElement wHTTaxIndicatorValue = AccountCreateRq.addChildElement("WHTTaxIndicator", ns);
-            SOAPElement aROCodeValue = AccountCreateRq.addChildElement("AROCode", ns);
-            
-            SOAPElement dSOCodeValue = AccountCreateRq.addChildElement("DSOCode", ns);
-            SOAPElement statementModeValue = AccountCreateRq.addChildElement("StatementMode", ns);
-            SOAPElement statementFrequencyValue = AccountCreateRq.addChildElement("StatementFrequency", ns);
-            SOAPElement statementMediumValue = AccountCreateRq.addChildElement("StatementMedium", ns);
-            SOAPElement startDateValue = AccountCreateRq.addChildElement("StartDate", ns);
-            
-            SOAPElement weekDayValue = AccountCreateRq.addChildElement("WeekDay", ns);
-            SOAPElement holidayStatusValue = AccountCreateRq.addChildElement("HolidayStatus", ns);
-            SOAPElement businessEconomicCodeValue = AccountCreateRq.addChildElement("BusinessEconomicCode", ns);
-            SOAPElement sourceOfFundsValue = AccountCreateRq.addChildElement("SourceOfFunds", ns);
-            SOAPElement productSegmentValue = AccountCreateRq.addChildElement("ProductSegment", ns);
-            
-       
+            AccountCreateRq.addChildElement("SchemeCode", ns).addTextNode(accountCreateReqData.getSchemeCode());
+            AccountCreateRq.addChildElement("Product", ns).addTextNode(accountCreateReqData.getProduct());
+            AccountCreateRq.addChildElement("BranchSortCode", ns).addTextNode(accountCreateReqData.getBranchSortCode());
+            AccountCreateRq.addChildElement("Currency", ns).addTextNode(accountCreateReqData.getCurrency());
+            AccountCreateRq.addChildElement("CustomerCode", ns).addTextNode(accountCreateReqData.getCustomerCode());
+            AccountCreateRq.addChildElement("SectorCode", ns).addTextNode(accountCreateReqData.getSectorCode());
+            AccountCreateRq.addChildElement("SubsectorCode", ns).addTextNode(accountCreateReqData.getSubsectorCode());
+            AccountCreateRq.addChildElement("PurposeOfAccount", ns).addTextNode(accountCreateReqData.getPurposeOfAccount());
+            AccountCreateRq.addChildElement("WHTTaxIndicator", ns).addTextNode(accountCreateReqData.getWHTTaxIndicator());
+            AccountCreateRq.addChildElement("AROCode", ns).addTextNode(accountCreateReqData.getAROCode());
+            AccountCreateRq.addChildElement("DSOCode", ns).addTextNode(accountCreateReqData.getDSOCode());
+            AccountCreateRq.addChildElement("StatementMode", ns).addTextNode(accountCreateReqData.getStatementMode());
+            AccountCreateRq.addChildElement("StatementFrequency", ns).addTextNode(accountCreateReqData.getStatementFrequency());
+            AccountCreateRq.addChildElement("StatementMedium", ns).addTextNode("");
+            AccountCreateRq.addChildElement("StartDate", ns).addTextNode(accountCreateReqData.getStartDate());
+            AccountCreateRq.addChildElement("WeekDay", ns).addTextNode(accountCreateReqData.getWeekDay());
+            AccountCreateRq.addChildElement("HolidayStatus", ns).addTextNode(accountCreateReqData.getHolidayStatus());
+            AccountCreateRq.addChildElement("BusinessEconomicCode", ns).addTextNode(accountCreateReqData.getBusinessEconomicCode());
+            AccountCreateRq.addChildElement("SourceOfFunds", ns).addTextNode(accountCreateReqData.getSourceOfFunds());
+            AccountCreateRq.addChildElement("ProductSegment", ns).addTextNode(accountCreateReqData.getProductSegment());
 
-            schemeCodeValue.addTextNode(accountCreateReqData.getSchemeCode());
-            productValue.addTextNode(accountCreateReqData.getProduct());
-            branchSortCodeValue.addTextNode(accountCreateReqData.getBranchSortCode());
-            currencyValue.addTextNode(accountCreateReqData.getCurrency());
-            customerCodeValue.addTextNode(accountCreateReqData.getCustomerCode());
-            
-            sectorCodeValue.addTextNode(accountCreateReqData.getSectorCode());
-            subsectorCodeValue.addTextNode(accountCreateReqData.getSubsectorCode());
-            purposeOfAccountValue.addTextNode(accountCreateReqData.getPurposeOfAccount());
-            wHTTaxIndicatorValue.addTextNode(accountCreateReqData.getWHTTaxIndicator());
-            aROCodeValue.addTextNode(accountCreateReqData.getAROCode());
-            
-            dSOCodeValue.addTextNode(accountCreateReqData.getDSOCode());
-            statementModeValue.addTextNode(accountCreateReqData.getStatementMode());
-            statementFrequencyValue.addTextNode(accountCreateReqData.getStatementFrequency());
-            statementMediumValue.addTextNode(accountCreateReqData.getStatementMedium());
-            startDateValue.addTextNode(accountCreateReqData.getStartDate());
-            
-            weekDayValue.addTextNode(accountCreateReqData.getWeekDay());
-            holidayStatusValue.addTextNode(accountCreateReqData.getHolidayStatus());
-            businessEconomicCodeValue.addTextNode(accountCreateReqData.getHolidayStatus());
-            sourceOfFundsValue.addTextNode(accountCreateReqData.getSourceOfFunds());
-            productSegmentValue.addTextNode(accountCreateReqData.getProductSegment());
-            
 
             MimeHeaders headers = SOAPMessage.getMimeHeaders();
             headers.addHeader("SOAPAction", "\"" + "AccountCreate" + "\"");
