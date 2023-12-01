@@ -62,7 +62,7 @@ return soapResponse;
 
 }
     
-    public static SOAPMessage getAccountCreateReq(AccountCreateRequest accountCreateReqData,String accountCreateEndpoint,String soaUsername,String soaPassword,String soaSystemCode) {
+    public static SOAPMessage postAccountCreateReq(String schemeCode,String product,String customerCode,String sourceOfFunds,String accountCreateEndpoint,String soaUsername,String soaPassword,String soaSystemCode) {
         SOAPMessage SOAPMessageResponse = null;
 //        SOAPMessage response = null;
 
@@ -105,6 +105,7 @@ return soapResponse;
             SOAPElement userName = credentialss.addChildElement("Username", mes);
             SOAPElement password = credentialss.addChildElement("Password", mes);
             SOAPElement realm = credentialss.addChildElement("Realm", mes);
+            SOAPElement bankID = credentialss.addChildElement("BankID", mes);
 
             creationTimestamp.addTextNode(strDate);
             correlationID.addTextNode(reference);
@@ -115,31 +116,40 @@ return soapResponse;
             userName.addTextNode(soaUsername);
             password.addTextNode(soaPassword);
             realm.addTextNode("cc");
+            bankID.addTextNode("01");
 
             SOAPBody soapBody = envelope.getBody();
 
             SOAPElement AccountCreateRq = soapBody.addChildElement("AccountCreateRequest", ns);
             
-            AccountCreateRq.addChildElement("SchemeCode", ns).addTextNode(accountCreateReqData.getSchemeCode());
-            AccountCreateRq.addChildElement("Product", ns).addTextNode(accountCreateReqData.getProduct());
-            AccountCreateRq.addChildElement("BranchSortCode", ns).addTextNode(accountCreateReqData.getBranchSortCode());
-            AccountCreateRq.addChildElement("Currency", ns).addTextNode(accountCreateReqData.getCurrency());
-            AccountCreateRq.addChildElement("CustomerCode", ns).addTextNode(accountCreateReqData.getCustomerCode());
-            AccountCreateRq.addChildElement("SectorCode", ns).addTextNode(accountCreateReqData.getSectorCode());
-            AccountCreateRq.addChildElement("SubsectorCode", ns).addTextNode(accountCreateReqData.getSubsectorCode());
-            AccountCreateRq.addChildElement("PurposeOfAccount", ns).addTextNode(accountCreateReqData.getPurposeOfAccount());
-            AccountCreateRq.addChildElement("WHTTaxIndicator", ns).addTextNode(accountCreateReqData.getWHTTaxIndicator());
-            AccountCreateRq.addChildElement("AROCode", ns).addTextNode(accountCreateReqData.getAROCode());
-            AccountCreateRq.addChildElement("DSOCode", ns).addTextNode(accountCreateReqData.getDSOCode());
-            AccountCreateRq.addChildElement("StatementMode", ns).addTextNode(accountCreateReqData.getStatementMode());
-            AccountCreateRq.addChildElement("StatementFrequency", ns).addTextNode(accountCreateReqData.getStatementFrequency());
+            AccountCreateRq.addChildElement("SchemeCode", ns).addTextNode(schemeCode);
+            AccountCreateRq.addChildElement("Product", ns).addTextNode(product);
+            AccountCreateRq.addChildElement("BranchSortCode", ns).addTextNode("1002");
+            AccountCreateRq.addChildElement("Currency", ns).addTextNode("KES");
+            AccountCreateRq.addChildElement("CustomerCode", ns).addTextNode(customerCode);
+            AccountCreateRq.addChildElement("SectorCode", ns).addTextNode("01");
+            AccountCreateRq.addChildElement("SubsectorCode", ns).addTextNode("0101");
+            AccountCreateRq.addChildElement("PurposeOfAccount", ns).addTextNode("PERSONAL SAVING");
+            AccountCreateRq.addChildElement("WHTTaxIndicator", ns).addTextNode("P");
+            AccountCreateRq.addChildElement("AROCode", ns).addTextNode("063BB05");
+            AccountCreateRq.addChildElement("DSOCode", ns).addTextNode("8230");
+            AccountCreateRq.addChildElement("StatementMode", ns).addTextNode("S");
+            AccountCreateRq.addChildElement("StatementFrequency", ns).addTextNode("M");
             AccountCreateRq.addChildElement("StatementMedium", ns).addTextNode("");
-            AccountCreateRq.addChildElement("StartDate", ns).addTextNode(accountCreateReqData.getStartDate());
-            AccountCreateRq.addChildElement("WeekDay", ns).addTextNode(accountCreateReqData.getWeekDay());
-            AccountCreateRq.addChildElement("HolidayStatus", ns).addTextNode(accountCreateReqData.getHolidayStatus());
-            AccountCreateRq.addChildElement("BusinessEconomicCode", ns).addTextNode(accountCreateReqData.getBusinessEconomicCode());
-            AccountCreateRq.addChildElement("SourceOfFunds", ns).addTextNode(accountCreateReqData.getSourceOfFunds());
-            AccountCreateRq.addChildElement("ProductSegment", ns).addTextNode(accountCreateReqData.getProductSegment());
+            AccountCreateRq.addChildElement("StartDate", ns).addTextNode("1");
+            AccountCreateRq.addChildElement("WeekDay", ns).addTextNode("0");
+            AccountCreateRq.addChildElement("HolidayStatus", ns).addTextNode("N");
+            AccountCreateRq.addChildElement("BusinessEconomicCode", ns).addTextNode("A0111");
+            AccountCreateRq.addChildElement("SourceOfFunds", ns).addTextNode(sourceOfFunds);
+            AccountCreateRq.addChildElement("ProductSegment", ns).addTextNode("");
+            
+            AccountCreateRq.addChildElement("AccountName", ns).addTextNode("");
+            AccountCreateRq.addChildElement("OperationMode", ns).addTextNode("");
+            AccountCreateRq.addChildElement("GenLedgerSubHeadCode", ns).addTextNode("");
+            
+            SOAPElement RelatedPartyRecReq = AccountCreateRq.addChildElement("RelatedPartyRec", ns);
+            RelatedPartyRecReq.addChildElement("RelationshipType", ns).addTextNode("");
+            RelatedPartyRecReq.addChildElement("CustomerId", ns).addTextNode("");
 
 
             MimeHeaders headers = SOAPMessage.getMimeHeaders();

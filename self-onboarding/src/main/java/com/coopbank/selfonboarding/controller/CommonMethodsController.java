@@ -9,6 +9,8 @@ import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPHeader;
 import javax.xml.soap.SOAPMessage;
 
+import javax.xml.soap.SOAPException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
@@ -158,7 +160,6 @@ public class CommonMethodsController {
 	ObjectMapper objectMapper = new ObjectMapper();
 	
 	
-
 //	----------------------- Start IPRS Details ----------------------- //
 	public static int INDENTATION = 4;
 	@PostMapping("/iprsDetails")
@@ -865,13 +866,12 @@ public class CommonMethodsController {
 //	----------------------- End Customer Details Summary ----------------------- //
 	
 //	----------------------- Start Account Create ----------------------- //
-	@PostMapping("/AccountCreate")
-	public ResponseEntity<Object> getAccountCreateData(@RequestBody AccountCreateRequest accountCreateReqData) throws Exception {
-		String requestJson = objectMapper.writeValueAsString(accountCreateReqData);
-		log.info("Request AccountCreate " + requestJson);
+	public String getAccountCreateData(String schemeCode,String product,String customerCode,String sourceOfFunds) throws Exception {
 		HashMap<String, String> map = new HashMap<>();
-		SOAPMessage soapResponse = AccountCreate.getAccountCreateReq(accountCreateReqData,accountCreateEndpoint,soaUsername,soaPassword,soaSystemCode);
-
+		SOAPMessage soapResponse = AccountCreate.postAccountCreateReq(schemeCode, product, customerCode, sourceOfFunds,accountCreateEndpoint,soaUsername,soaPassword,soaSystemCode);
+		String messageDescriptionRes = null;
+		String AccountIDRes = null;
+		
         if (soapResponse == null) {            
      	   map.put("Status", "false");
            map.put("StatusDescription", "Failed");
@@ -886,7 +886,7 @@ public class CommonMethodsController {
         	xmlStringHeader = xmlStringHeader.replace("tns3:",""); 
         	
         	String messageDescriptionTag = "MessageDescription";
-            String messageDescriptionRes = xmlStringHeader.split("<"+ messageDescriptionTag +">")[1].split("</"+ messageDescriptionTag+">")[0];
+            messageDescriptionRes = xmlStringHeader.split("<"+ messageDescriptionTag +">")[1].split("</"+ messageDescriptionTag+">")[0];
 
 
         	NodeList returnList = (NodeList) header.getElementsByTagName("head:ResponseHeader");
@@ -899,12 +899,16 @@ public class CommonMethodsController {
         			SOAPBody sb = soapResponse.getSOAPBody();
         				 
       		        String xmlString = CommonMethods.convertToString(sb);
-      		        xmlString=xmlString.replace(" xmlns:tns28=\"urn://co-opbank.co.ke/BS/Customer/CustomerDetailsSummary.1.0\"","");
+      		        xmlString=xmlString.replace(" xmlns:ns25=\"urn://co-opbank.co.ke/DataModel/Acccount/AccountCreate/Post/2.0\"","");
   		            xmlString=xmlString.replace(" xmlns:tns30=\"urn://co-opbank.co.ke/TS/Finacle/CustomerDetailsSummary.Get.1.0\"","");
-  		            xmlString=xmlString.replace("tns28:","");
+  		            xmlString=xmlString.replace("ns25:","");
   		            xmlString=xmlString.replace("<?xml version\"1.0\" encoding\"UTF-8\" standalone\"no\"?>","");
       		        log.info(xmlString);
-     		            
+      		        
+      		      String AccountIDTag = "AccountID";
+      		       AccountIDRes = xmlString.split("<"+ AccountIDTag +">")[1].split("</"+ AccountIDTag+">")[0];
+
+      		     log.info(AccountIDRes);
      		        try {
                      JSONObject jsonObj = XML.toJSONObject(xmlString);
                      String json = jsonObj.toString(INDENTATION);
@@ -929,14 +933,20 @@ public class CommonMethodsController {
                  }
         	}
         }
-		return new ResponseEntity<Object>(map, HttpStatus.OK);
-
+        
+        
+        if(messageDescriptionRes.equals("SUCCESS")) {
+        	return AccountIDRes;
+        	}else {
+        	return messageDescriptionRes;
+        	}
+       
 	}
   //	----------------------- End Account Create----------------------- //
 	
 //	----------------------- Start Signing Details ----------------------- //
 	@PostMapping("/SigningDetails")
-	public ResponseEntity<Object> getAccountCreateData(@RequestBody SigningDetailsRequest signingDetailsReqData) throws Exception {
+	public ResponseEntity<Object> getSigningDetailsData(@RequestBody SigningDetailsRequest signingDetailsReqData) throws Exception {
 		String requestJson = objectMapper.writeValueAsString(signingDetailsReqData);
 		log.info("Request SigningDetails " + requestJson);
 		HashMap<String, String> map = new HashMap<>();
@@ -1156,86 +1166,100 @@ public class CommonMethodsController {
 	
 	
 //	----------------------- Start Create Retail Customer ----------------------- //
+	
 	@PostMapping("/RetailCustomerCreate")
 	public ResponseEntity<Object> postCreateRetailCustomer(@RequestBody RetailCustomerCreate retailCustomerCreate) throws Exception {
-		
 	    String requestJson = objectMapper.writeValueAsString(retailCustomerCreate);
-
 	    log.info(" JSON Request RetailCustomerCreate: " + requestJson);
-		
-	
-		HashMap<String, String> map = new HashMap<>();
-		
 
-	
-		SOAPMessage soapResponse = CreateRetailCustomer.createRetailCustomerSOAPRequest(retailCustomerCreate,retailCustomerCreateEndpoint,soaUsername,soaPassword,soaSystemCode);
+	    HashMap<String, String> map = new HashMap<>();
+	    String customerIDRes = null;
+	    String accNumberRes = null;
+	    boolean isExisting = false;
+	    SOAPMessage soapResponse = null;
+	    isExisting = Boolean.parseBoolean(retailCustomerCreate.getPersonalPartyBasicDetails().getIsExisting());
 
-     if (soapResponse == null) {            
-  	   map.put("Status", "false");
-        map.put("StatusDescription", "Failed");
-        map.put("Description", "Null response");
-     } 
-     else {
-     	SOAPHeader header = soapResponse.getSOAPHeader();
-     	
-     	String xmlStringHeader = CommonMethods.convertHeaderString(header);
-     	
-     	
-     	xmlStringHeader = xmlStringHeader.replace("head:",""); 
-     	
-     	String statusDescriptionTag = "StatusDescription";
-         String statusDescriptionRes = xmlStringHeader.split("<"+ statusDescriptionTag +">")[1].split("</"+ statusDescriptionTag+">")[0];
-         
-         String messageDescriptionRes = null;
-         
-         if(statusDescriptionRes.equals("Failed")) {
-	        	String messageDescriptionTag = "MessageDescription";
-	            messageDescriptionRes = xmlStringHeader.split("<"+ messageDescriptionTag +">")[1].split("</"+ messageDescriptionTag+">")[0];
-			}
-        
+	    if (isExisting) {
+	        customerIDRes = retailCustomerCreate.getPersonalPartyBasicDetails().getExistingCif();
+	        accNumberRes = getAccountCreateData(retailCustomerCreate.getPersonalPartyBasicDetails().getSchemeCode(), retailCustomerCreate.getPersonalPartyBasicDetails().getProduct(), customerIDRes, retailCustomerCreate.getPersonalPartyBasicDetails().getSourceOfFunds());
+	        handleSuccess(map, customerIDRes, accNumberRes, null);
+	    } else {
+	        soapResponse = CreateRetailCustomer.createRetailCustomerSOAPRequest(retailCustomerCreate, retailCustomerCreateEndpoint, soaUsername, soaPassword, soaSystemCode);
+	        if (soapResponse == null) {
+	            handleFailure(map, "Null response");
+	        } else {
+	            handleSoapResponse(soapResponse, map,retailCustomerCreate.getPersonalPartyBasicDetails().getSchemeCode(), retailCustomerCreate.getPersonalPartyBasicDetails().getProduct(),retailCustomerCreate.getPersonalPartyBasicDetails().getSourceOfFunds());
+	        }
+	    }
 
-     	NodeList returnList = (NodeList) header.getElementsByTagName("head:ResponseHeader");
-     	
-     	for (int k = 0; k < returnList.getLength(); k++) {
-     		NodeList innerResultList = returnList.item(k).getChildNodes();
-     		 if (innerResultList.item(3).getNodeName().equalsIgnoreCase("head:StatusDescription")) {
-     			 String statusDesc = String.valueOf(innerResultList.item(3).getTextContent().trim());
-     			 if (statusDesc.equals("Success")) {
-     			SOAPBody sb = soapResponse.getSOAPBody();
-     				 
-   		        String xmlString = CommonMethods.convertToString(sb);
-   		        xmlString=xmlString.replace("xmlns:tns30=\"urn://co-opbank.co.ke/BS/Customer/RetailCustomerCreate/Post.1.0\"","");
-		            xmlString=xmlString.replace("tns30:","");
-		            xmlString=xmlString.replace(" <?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>","");
-   		        log.info(xmlString);
-   		                 
-  		        try {
-  		        	JSONObject jsonObj = XML.toJSONObject(xmlString);
-                     String json = jsonObj.toString(INDENTATION);
-            
-                    map.put("Status", "true");
-                    map.put("StatusDescription", statusDesc);
-                    map.put("Response", json);
-                 
-              } catch (JSONException ex) {
-                  ex.printStackTrace();
-              }
-     			 } else {
-         			 map.put("Status", "false");
-     	             map.put("StatusDescription", statusDesc);
-     	             map.put("Description", messageDescriptionRes);
-                  }
-     		 } else {
-     			 map.put("Status", "false");
- 	             map.put("StatusDescription", "Failed");
- 	             map.put("Description", messageDescriptionRes);
-              }
-     	}
-     }
-
-		return new ResponseEntity<Object>(map, HttpStatus.OK);
-
+	    return new ResponseEntity<>(map, HttpStatus.OK);
 	}
+
+	private void handleSuccess(HashMap<String, String> map, String customerID, String accNumber, String json) {
+	    map.put("Status", "true");
+	    map.put("StatusDescription", "success");
+	    map.put("customerID", customerID);
+	    map.put("Account Number", accNumber);
+	    if (json != null) {
+	        map.put("Response", json);
+	    }
+	}
+
+	private void handleFailure(HashMap<String, String> map, String description) {
+	    map.put("Status", "false");
+	    map.put("StatusDescription", "Failed");
+	    map.put("Description", description);
+	}
+
+	private void handleSoapResponse(SOAPMessage soapResponse, HashMap<String, String> map,String schemeCode,String product,String sourceOfFunds) throws Exception {
+	    SOAPHeader header = soapResponse.getSOAPHeader();
+	    String accNumberRes = null;
+	    String xmlStringHeader = CommonMethods.convertHeaderString(header);
+	    xmlStringHeader = xmlStringHeader.replace("head:", "");
+
+	    String statusDescriptionTag = "StatusDescription";
+	    String statusDescriptionRes = xmlStringHeader.split("<" + statusDescriptionTag + ">")[1].split("</" + statusDescriptionTag + ">")[0];
+
+	    if (statusDescriptionRes.equals("Failed")) {
+	        String messageDescriptionTag = "MessageDescription";
+	        String messageDescriptionRes = xmlStringHeader.split("<" + messageDescriptionTag + ">")[1].split("</" + messageDescriptionTag + ">")[0];
+	        handleFailure(map, messageDescriptionRes);
+	    } else {
+	        NodeList returnList = header.getElementsByTagName("head:ResponseHeader");
+	        for (int k = 0; k < returnList.getLength(); k++) {
+	            NodeList innerResultList = returnList.item(k).getChildNodes();
+	            if (innerResultList.item(3).getNodeName().equalsIgnoreCase("head:StatusDescription")) {
+	                String statusDesc = String.valueOf(innerResultList.item(3).getTextContent().trim());
+	                if (statusDesc.equals("Success")) {
+	                    SOAPBody sb = soapResponse.getSOAPBody();
+	                    String xmlString = CommonMethods.convertToString(sb);
+	                    xmlString = xmlString.replace("xmlns:tns30=\"urn://co-opbank.co.ke/BS/Customer/RetailCustomerCreate/Post.1.0\"", "");
+	                    xmlString = xmlString.replace("tns30:", "");
+	                    xmlString = xmlString.replace(" <?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "");
+	                    log.info(xmlString);
+
+	                    try {
+	                        String customerIDTag = "CustomerID";
+	                        String customerIDRes = xmlString.split("<" + customerIDTag + ">")[1].split("</" + customerIDTag + ">")[0];
+	                        accNumberRes = getAccountCreateData(schemeCode, product, customerIDRes, sourceOfFunds);
+	                        JSONObject jsonObj = XML.toJSONObject(xmlString);
+	                        String json = jsonObj.toString(INDENTATION);
+	                        handleSuccess(map, customerIDRes, accNumberRes, json);
+	                    } catch (JSONException ex) {
+	                        ex.printStackTrace();
+	                    }
+	                } else {
+	                    String messageDescriptionTag = "MessageDescription";
+	                    String messageDescriptionRes = xmlStringHeader.split("<" + messageDescriptionTag + ">")[1].split("</" + messageDescriptionTag + ">")[0];
+	                    handleFailure(map, messageDescriptionRes);
+	                }
+	            } else {
+	                handleFailure(map, "Failed");
+	            }
+	        }
+	    }
+	}
+
 	//	----------------------- End Create Retail Customer ----------------------- //
 	
 	

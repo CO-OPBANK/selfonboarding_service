@@ -12,6 +12,7 @@ import com.coopbank.selfonboarding.request.retailCustomerCreate.RelatedBankDetai
 import com.coopbank.selfonboarding.request.retailCustomerCreate.RelationshipDetails;
 import com.coopbank.selfonboarding.request.retailCustomerCreate.TaxDetails;
 
+
 import lombok.Data;
 
 @Data
