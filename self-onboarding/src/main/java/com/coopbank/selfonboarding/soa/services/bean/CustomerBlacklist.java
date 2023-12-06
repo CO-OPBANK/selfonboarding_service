@@ -47,14 +47,14 @@ try {
     SOAPConnection soapConnection = soapConnectionFactory.createConnection();
     CommonMethods.doTrustToCertificates();
     String url =  blacklistEndpoint;
-    log.info("\n--------------------------------- SOAP Response & URL ---------------------------------");
-    log.info("request is == " + soapRequest +" url == "+url);
-    log.info("\n--------------------------------- SOAP Response & URL ---------------------------------");
+//    log.info("\n--------------------------------- SOAP Response & URL ---------------------------------");
+//    log.info("request is == " + soapRequest +" url == "+url);
+//    log.info("\n--------------------------------- SOAP Response & URL ---------------------------------");
 
-    log.info("\n--------------------------------- SOAP Response ---------------------------------");
+//    log.info("\n--------------------------------- SOAP Response ---------------------------------");
     soapResponse = soapConnection.call(soapRequest, url);
     CommonMethods.createSoapResponse(soapResponse);
-    log.info("\n--------------------------------- SOAP Response ---------------------------------");
+//    log.info("\n--------------------------------- SOAP Response ---------------------------------");
     soapConnection.close();
 } catch (Exception e) {
     e.printStackTrace();
@@ -153,7 +153,7 @@ return soapResponse;
 
             SOAPMessageResponse = getBlacklist((SOAPMessage),blacklistEndpoint,soaPassword);
 
-            log.info(" Response  is  for ID "/*+idNumber*/ + " is " + SOAPMessageResponse);
+//            log.info(" Response  is  for ID "/*+idNumber*/ + " is " + SOAPMessageResponse);
 
         } catch (Exception ex) {
             Logger.getLogger(CustomerBlacklist.class.getName()).log(Level.SEVERE, null, ex);

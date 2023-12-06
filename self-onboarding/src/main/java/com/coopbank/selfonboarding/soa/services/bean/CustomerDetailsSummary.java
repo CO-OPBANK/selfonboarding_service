@@ -45,7 +45,7 @@ try {
     CommonMethods.doTrustToCertificates();
     String url =  custDetailsSummaryEndpoint;
     //System.out.println("\n--------------------------------- SOAP Response & URL ---------------------------------");
-    log.info("request is == " + soapRequest +" url == "+url);
+//    log.info("request is == " + soapRequest +" url == "+url);
     //System.out.println("\n--------------------------------- SOAP Response & URL ---------------------------------");
     
    // System.out.println("\n--------------------------------- SOAP Response ---------------------------------");
@@ -155,7 +155,7 @@ return soapResponse;
 
             SOAPMessageResponse = getCustomerDetailsSummary((SOAPMessage),custDetailsSummaryEndpoint,soaPassword);
 
-            log.info("\n Response  is  for ID  " + SOAPMessageResponse);
+//            log.info("\n Response  is  for ID  " + SOAPMessageResponse);
 
         } catch (Exception ex) {
             Logger.getLogger(CustomerDetailsSummary.class.getName()).log(Level.SEVERE, null, ex);

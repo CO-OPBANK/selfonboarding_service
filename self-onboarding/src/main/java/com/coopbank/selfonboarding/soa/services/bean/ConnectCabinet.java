@@ -47,7 +47,7 @@ try {
     CommonMethods.doTrustToCertificates();
     String url =  connectCabinetEndpoint;
     //System.out.println("\n--------------------------------- SOAP Response & URL ---------------------------------");
-    log.info("request is == " + soapRequest +" url == "+url);
+//    log.info("request is == " + soapRequest +" url == "+url);
     //System.out.println("\n--------------------------------- SOAP Response & URL ---------------------------------");
     
    // System.out.println("\n--------------------------------- SOAP Response ---------------------------------");
@@ -167,7 +167,7 @@ return soapResponse;
 
             SOAPMessageResponse = postConnectCabinet((SOAPMessage),connectCabinetEndpoint,soaPassword);
 
-            log.info("\n Response  is  for ID  " + SOAPMessageResponse);
+//            log.info("\n Response  is  for ID  " + SOAPMessageResponse);
 
         } catch (Exception ex) {
             Logger.getLogger(ConnectCabinet.class.getName()).log(Level.SEVERE, null, ex);

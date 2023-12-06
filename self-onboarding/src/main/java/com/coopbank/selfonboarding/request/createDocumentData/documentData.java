@@ -9,4 +9,5 @@ public class documentData {
     private String indexId;
     private String indexType;
     private String indexValue;
+
 }

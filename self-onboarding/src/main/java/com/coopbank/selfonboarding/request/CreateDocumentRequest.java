@@ -8,5 +8,9 @@ public class CreateDocumentRequest {
 	public String parentFolderIndex;
 	public String documentName;
 	public String document;
+	private String accNumber;
+	private String custNumber;
+	private String idNumberNumber;
+	private String accName;
 	private documentDatas documentDatas;
 }

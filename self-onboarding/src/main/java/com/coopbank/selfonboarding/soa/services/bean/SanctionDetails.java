@@ -43,14 +43,14 @@ try {
     SOAPConnection soapConnection = soapConnectionFactory.createConnection();
     CommonMethods.doTrustToCertificates();
     String url =  sanctionDetailsEndpoint;
-    log.info("\n--------------------------------- SOAP Response & URL ---------------------------------");
-    log.info("request is == " + soapRequest +" url == "+url);
-    log.info("\n--------------------------------- SOAP Response & URL ---------------------------------");
+//    log.info("\n--------------------------------- SOAP Response & URL ---------------------------------");
+//    log.info("request is == " + soapRequest +" url == "+url);
+//    log.info("\n--------------------------------- SOAP Response & URL ---------------------------------");
 
-    log.info("\n--------------------------------- SOAP Response ---------------------------------");
+//    log.info("\n--------------------------------- SOAP Response ---------------------------------");
     soapResponse = soapConnection.call(soapRequest, url);
     CommonMethods.createSoapResponse(soapResponse);
-    System.out.println("\n--------------------------------- SOAP Response ---------------------------------");
+//    System.out.println("\n--------------------------------- SOAP Response ---------------------------------");
     soapConnection.close();
 } catch (Exception e) {
     e.printStackTrace();
@@ -185,7 +185,7 @@ return soapResponse;
 
             SOAPMessageResponse = getSanctionDetails((SOAPMessage),sanctionDetailsEndpoint,soaPassword);
 
-            log.info(" Response  is  for ID "/*+idNumber*/ + " is " + SOAPMessageResponse);
+//            log.info(" Response  is  for ID "/*+idNumber*/ + " is " + SOAPMessageResponse);
 
         } catch (Exception ex) {
             Logger.getLogger(AccountDetails.class.getName()).log(Level.SEVERE, null, ex);

@@ -23,6 +23,7 @@ import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPPart;
 
 import com.coopbank.selfonboarding.request.CreateDocumentRequest;
+import com.coopbank.selfonboarding.request.RetailCustomerCreate;
 import com.coopbank.selfonboarding.util.CommonMethods;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,7 +52,7 @@ try {
     CommonMethods.doTrustToCertificates();
     String url =  createDocumentEndpoint;
     //System.out.println("\n--------------------------------- SOAP Response & URL ---------------------------------");
-    log.info("request is == " + soapRequest +" url == "+url);
+//    log.info("request is == " + soapRequest +" url == "+url);
     //System.out.println("\n--------------------------------- SOAP Response & URL ---------------------------------");
     
    // System.out.println("\n--------------------------------- SOAP Response ---------------------------------");
@@ -114,16 +115,16 @@ return soapResponse;
             SOAPElement postInputRq = soapBody.addChildElement("PostInput", body);
             
             SOAPElement cabinetName = postInputRq.addChildElement("cabinetName", body);
-            cabinetName.addTextNode(createDocumentReqData.getCabinetName());
+            cabinetName.addTextNode("coopcabuat");
 
             SOAPElement documentPath = postInputRq.addChildElement("documentPath", body);
             documentPath.addTextNode("");
 
             SOAPElement parentFolderIndex = postInputRq.addChildElement("parentFolderIndex", body);
-            parentFolderIndex.addTextNode(createDocumentReqData.getParentFolderIndex());
+            parentFolderIndex.addTextNode("1273");
 
             SOAPElement documentName = postInputRq.addChildElement("documentName",body);
-            documentName.addTextNode(createDocumentReqData.getDocumentName());
+            documentName.addTextNode(createDocumentReqData.getAccName()+".pdf");
 
             SOAPElement userDBId = postInputRq.addChildElement("userDBId",body);
             userDBId.addTextNode(userId);
@@ -184,27 +185,51 @@ return soapResponse;
             document.addTextNode(createDocumentReqData.getDocument());
             
             // ...
-            documentDatas documentDatas = createDocumentReqData.getDocumentDatas();
+//            documentDatas documentDatas = createDocumentReqData.getDocumentDatas();
 
             // Create documentDatas element
             SOAPElement documentDatasElem = postInputRq.addChildElement("NGOAddDocDataDefCriterionBDO", body);
 
             // Add elements for documentDatas
-            documentDatasElem.addChildElement("dataDefIndex", body).addTextNode(documentDatas.getDataDefIndex());
-            documentDatasElem.addChildElement("dataDefName", body).addTextNode(documentDatas.getDataDefName());
+            documentDatasElem.addChildElement("dataDefIndex", body).addTextNode("146");
+            documentDatasElem.addChildElement("dataDefName", body).addTextNode("Account Opening Mandate");
 
-            List<documentData> documentDataList = documentDatas.getDocumentData();
+//            List<documentData> documentDataList = documentDatas.getDocumentData();
 
-            for (documentData documentData : documentDataList) {
+//            for (documentData documentData : documentDataList) {
                 // Create documentData element
                 SOAPElement documentDataElem = documentDatasElem.addChildElement("NGOAddDocDataDefCriteriaDataBDO", body);
-
                 // Add elements for documentData
-                documentDataElem.addChildElement("indexId", body).addTextNode(documentData.getIndexId());
-                documentDataElem.addChildElement("indexType", body).addTextNode(documentData.getIndexType());
-                documentDataElem.addChildElement("indexValue", body).addTextNode(documentData.getIndexValue());
+                documentDataElem.addChildElement("indexId", body).addTextNode("870");
+                documentDataElem.addChildElement("indexType", body).addTextNode("S");
+                documentDataElem.addChildElement("indexValue", body).addTextNode("Identification Document");
+                
+                SOAPElement accDocumentDataElem = documentDatasElem.addChildElement("NGOAddDocDataDefCriteriaDataBDO", body);
+                
+                accDocumentDataElem.addChildElement("indexId", body).addTextNode("869");
+                accDocumentDataElem.addChildElement("indexType", body).addTextNode("S");
+                accDocumentDataElem.addChildElement("indexValue", body).addTextNode(createDocumentReqData.getAccNumber());
+                
+                SOAPElement custNoDocumentDataElem = documentDatasElem.addChildElement("NGOAddDocDataDefCriteriaDataBDO", body);
+                
+                custNoDocumentDataElem.addChildElement("indexId", body).addTextNode("892");
+                custNoDocumentDataElem.addChildElement("indexType", body).addTextNode("S");
+                custNoDocumentDataElem.addChildElement("indexValue", body).addTextNode(createDocumentReqData.getCustNumber());
+                
+                
+                SOAPElement idNoDocumentDataElem = documentDatasElem.addChildElement("NGOAddDocDataDefCriteriaDataBDO", body);
+                
+                idNoDocumentDataElem.addChildElement("indexId", body).addTextNode("905");
+                idNoDocumentDataElem.addChildElement("indexType", body).addTextNode("S");
+                idNoDocumentDataElem.addChildElement("indexValue", body).addTextNode(createDocumentReqData.getIdNumberNumber());
+                
+                SOAPElement accNameDocumentDataElem = documentDatasElem.addChildElement("NGOAddDocDataDefCriteriaDataBDO", body);
+                
+                accNameDocumentDataElem.addChildElement("indexId", body).addTextNode("893");
+                accNameDocumentDataElem.addChildElement("indexType", body).addTextNode("S");
+                accNameDocumentDataElem.addChildElement("indexValue", body).addTextNode(createDocumentReqData.getAccName());
               
-            }
+//            }
        
             SOAPElement NGOAddDocKeywordsCriterionBDO = postInputRq.addChildElement("NGOAddDocKeywordsCriterionBDO",body);
             SOAPElement keyword = NGOAddDocKeywordsCriterionBDO.addChildElement("keyword",body);
@@ -233,7 +258,7 @@ return soapResponse;
 
             SOAPMessageResponse = postCreateDocument((SOAPMessage),createDocumentEndpoint,soaPassword);
 
-            log.info("\n Response  is  for ID  " + SOAPMessageResponse);
+//            log.info("\n Response  is  for ID  " + SOAPMessageResponse);
 
         } catch (Exception ex) {
             Logger.getLogger(CreateDocument.class.getName()).log(Level.SEVERE, null, ex);

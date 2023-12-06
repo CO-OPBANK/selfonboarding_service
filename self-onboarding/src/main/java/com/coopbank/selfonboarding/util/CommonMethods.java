@@ -52,7 +52,6 @@ public  static void createSoapResponse(SOAPMessage soapResponse) throws Exceptio
     Source sourceContent = soapResponse.getSOAPPart().getContent();
     System.out.println("\n--------------------------------- Start SOAP Response ---------------------------------");
     StreamResult result = new StreamResult(System.out);  
-    
     transformer.transform(sourceContent, result);
     System.out.println("\n--------------------------------- End SOAP Response ---------------------------------");
 

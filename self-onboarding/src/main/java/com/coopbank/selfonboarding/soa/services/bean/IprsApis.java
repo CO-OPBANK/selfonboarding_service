@@ -45,11 +45,11 @@ public class IprsApis {
 			    SOAPConnection soapConnection = soapConnectionFactory.createConnection();
 			    CommonMethods.doTrustToCertificates();
 			    String url =  iprsEndpoint;			   
-			    System.out.println("\n--------------------------------- SOAP Response ---------------------------------");
+//			    System.out.println("\n--------------------------------- SOAP Response ---------------------------------");
 			    soapResponse = soapConnection.call(soapRequest, url);
 			   
 			    CommonMethods.createSoapResponse(soapResponse);
-			    System.out.println("\n--------------------------------- SOAP Response ---------------------------------");
+//			    System.out.println("\n--------------------------------- SOAP Response ---------------------------------");
 		
 			    soapConnection.close();
 			} catch (Exception e) {
@@ -163,7 +163,7 @@ public class IprsApis {
 
             SOAPMessageResponse = postIprsRequest((SOAPMessage),iprsEndpoint,soaPassword);
 
-            log.info(" Response  is  " + SOAPMessageResponse);
+//            log.info(" Response  is  " + SOAPMessageResponse);
 
         } catch (Exception ex) {
             Logger.getLogger(IprsApis.class.getName()).log(Level.SEVERE, null, ex);

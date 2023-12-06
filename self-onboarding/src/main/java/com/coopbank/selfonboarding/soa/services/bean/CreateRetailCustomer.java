@@ -62,7 +62,7 @@ try {
     CommonMethods.doTrustToCertificates();
     String url =  retailCustomerCreateEndpoint;
     //System.out.println("\n--------------------------------- SOAP Response & URL ---------------------------------");
-    log.info("request is == " + soapRequest +" url == "+url);
+//    log.info("request is == " + soapRequest +" url == "+url);
     //System.out.println("\n--------------------------------- SOAP Response & URL ---------------------------------");
     
    // System.out.println("\n--------------------------------- SOAP Response ---------------------------------");
@@ -496,7 +496,7 @@ return soapResponse;
             SOAPMessageResponse = postCreateRetailCustomer(SOAPMessage, retailCustomerCreateEndpoint, soaPassword);
 
             // Handle the response
-            log.info("\n Response  is  for ID  " + SOAPMessageResponse);
+//            log.info("\n Response  is  for ID  " + SOAPMessageResponse);
 
         } catch (Exception ex) {
             // Handle exceptions

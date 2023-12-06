@@ -42,11 +42,11 @@ SOAPMessage soapResponse = null;
 		    SOAPConnection soapConnection = soapConnectionFactory.createConnection();
 		    CommonMethods.doTrustToCertificates();
 		    String url =  kraEndpoint;
-            log.info("\n--------------------------------- SOAP Response ---------------------------------");
+//            log.info("\n--------------------------------- SOAP Response ---------------------------------");
 		    soapResponse = soapConnection.call(soapRequest, url);
 		   
 		    CommonMethods.createSoapResponse(soapResponse);
-            log.info("\n--------------------------------- SOAP Response ---------------------------------");
+//            log.info("\n--------------------------------- SOAP Response ---------------------------------");
 	
 		    soapConnection.close();
 		} catch (Exception e) {
@@ -151,7 +151,7 @@ SOAPMessage soapResponse = null;
 
             SOAPMessageResponse = postValidatePinRequest((SOAPMessage),kraEndpoint,soaPassword);
 
-            log.info(" Response  is "/*+idNumber*/ + " is " + SOAPMessageResponse);
+//            log.info(" Response  is "/*+idNumber*/ + " is " + SOAPMessageResponse);
 
         } catch (Exception ex) {
             Logger.getLogger(ValidatePinRequest.class.getName()).log(Level.SEVERE, null, ex);

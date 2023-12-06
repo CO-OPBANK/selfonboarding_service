@@ -8,17 +8,14 @@ public class PersonalPartyBasicDetails {
     private String phone;
     private String kraPin;
     private String dob;
-    // private String gender;
+     private String signature;
     private String maritalStatus;
-    // private String nationality;
+     private String verifiedPhoto;
     private String liableForTax;
     private String taxCountry;
     private String idNumber;
     private String branch;
     private String salutation;
-    // private String firstName;
-    // private String middleName;
-    // private String lastName;
     private String postalCode;
     private String streetRoadName;
     private String estateBuildingName;
@@ -28,16 +25,17 @@ public class PersonalPartyBasicDetails {
     private String country;
     private String pfNumber;
     private String sourceOfFunds;
-    private String incomeRange;//
+    private String incomeRange;
     private String occupationStatus;
     private String isBankStaff;
-
     private String isExisting;
     private String existingCif;
     private String schemeCode;
     private String product;
     private String docType;
-    // private String pepAssociate;
+    private String natIdImageFront;
+    private String natIdImageBack;
+    private String passport;
 
     private String customerType;
     private String nationalIdentifier;

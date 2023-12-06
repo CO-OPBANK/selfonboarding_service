@@ -45,14 +45,14 @@ public class SendSMS {
 	    SOAPConnection soapConnection = soapConnectionFactory.createConnection();
 	    CommonMethods.doTrustToCertificates();
 	    String url =  smsEndpoint;
-		log.info("\n--------------------------------- SOAP Response & URL ---------------------------------");
-	    log.info("request is == " + soapRequest +" url == "+url);
-		log.info("\n--------------------------------- SOAP Response & URL ---------------------------------");
+//		log.info("\n--------------------------------- SOAP Response & URL ---------------------------------");
+//	    log.info("request is == " + soapRequest +" url == "+url);
+//		log.info("\n--------------------------------- SOAP Response & URL ---------------------------------");
 
-		log.info("\n--------------------------------- SOAP Response ---------------------------------");
+//		log.info("\n--------------------------------- SOAP Response ---------------------------------");
 	    soapResponse = soapConnection.call(soapRequest, url);
 	    CommonMethods.createSoapResponse(soapResponse);
-		log.info("\n--------------------------------- SOAP Response ---------------------------------");
+//		log.info("\n--------------------------------- SOAP Response ---------------------------------");
 	    soapConnection.close();
 	} catch (Exception e) {
 	    e.printStackTrace();
