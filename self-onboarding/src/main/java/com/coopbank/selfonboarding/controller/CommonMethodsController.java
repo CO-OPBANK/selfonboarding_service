@@ -162,7 +162,8 @@ public class CommonMethodsController {
 	@Value("${api.RETAILCUSTOMERCREATE.ENDPOINT_URL}")
 	String retailCustomerCreateEndpoint;
 	
-	String coopLogo = "https://miro.medium.com/v2/resize:fit:1156/0*R0eLoX1Knzuaxe_y";
+	String coopLogoheader = "https://kikimodev.com/coop/coopselfheader.png";
+	String coopLogofooter = "https://kikimodev.com/coop/coopfooter.png";
 	ObjectMapper objectMapper = new ObjectMapper();
 	
 	
@@ -1345,8 +1346,7 @@ public class CommonMethodsController {
 	    String productType  = retailCustomerCreate.getPersonalPartyBasicDetails().getProduct();	    
 	    String uppercaseFullNames = fullNames.toUpperCase();
 	    
-	    String emailMessage = "<!DOCTYPE html><html><head> <style> /* Add any additional styling here */ body { font-family: Arial, sans-serif; margin: 0; padding: 0; } img { max-width: 100%; height: auto; } .email-content { max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; } </style></head><body> <div class=\"email-content\"><img src=\""+coopLogo+"\" alt=\"Coop Logo\"> <p>Dear "+fullNames+",</p> <p>We thank you for choosing Cooperative Bank as your preferred bank. We are pleased to advise that your account is now open with the following details:</p> <ul> <li><strong>Account Name:</strong> "+uppercaseFullNames+"</li> <li><strong>Account Type:</strong> COOPERATIVE BABK SAVINGS - "+productType+"</li> <li><strong>Account Number:</strong> "+accNumberRes+"</li> <li><strong>Account Currency:</strong> KENYAN SHILLINGS</li> </ul> </div></body></html>";	    
-	    
+	    String emailMessage = "<!DOCTYPE html><html><head> <style> /* Add any additional styling here */ body { font-family: Arial, sans-serif; margin: 0; padding: 0; } img { max-width: 100%; height: auto; } .email-content { max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; } </style></head><body> <div class=\"email-content\"><img src=\""+coopLogoheader+"\" alt=\"Coop Logo\"> <p>Dear "+fullNames+",</p> <p>We thank you for choosing Cooperative Bank as your preferred bank. We are pleased to advise that your account is now open with the following details:</p> <ul> <li><strong>Account Name:</strong> "+uppercaseFullNames+"</li> <li><strong>Account Type:</strong> COOPERATIVE BANK SAVINGS - "+productType+"</li> <li><strong>Account Number:</strong> "+accNumberRes+"</li> <li><strong>Account Currency:</strong> KENYAN SHILLINGS</li> </ul> <img src=\""+coopLogofooter+"\" alt=\"Coop Logo\"></div></body></html>";	 
 	     
         String emailSubject ="Welcome to Cooperative Bank of Kenya";
     	
@@ -1459,9 +1459,7 @@ public class CommonMethodsController {
 	                	    String productType  = retailCustomerCreate.getPersonalPartyBasicDetails().getProduct();	    
 	                	    String uppercaseFullNames = fullNames.toUpperCase();
 	                	    
-	                	    String emailMessage = "<!DOCTYPE html><html><head> <style> /* Add any additional styling here */ body { font-family: Arial, sans-serif; margin: 0; padding: 0; } img { max-width: 100%; height: auto; } .email-content { max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; } </style></head><body> <div class=\"email-content\"><img src=\""+coopLogo+"\" alt=\"Coop Logo\"> <p>Dear "+fullNames+",</p> <p>We thank you for choosing Cooperative Bank as your preferred bank. We are pleased to advise that your account is now open with the following details:</p> <ul> <li><strong>Account Name:</strong> "+uppercaseFullNames+"</li> <li><strong>Account Type:</strong> COOPERATIVE BABK SAVINGS - "+productType+"</li> <li><strong>Account Number:</strong> "+accNumberRes+"</li> <li><strong>Account Currency:</strong> KENYAN SHILLINGS</li> </ul> </div></body></html>";	    
-	                	    
-	                	     
+	                	    String emailMessage = "<!DOCTYPE html><html><head> <style> /* Add any additional styling here */ body { font-family: Arial, sans-serif; margin: 0; padding: 0; } img { max-width: 100%; height: auto; } .email-content { max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; } </style></head><body> <div class=\"email-content\"><img src=\""+coopLogoheader+"\" alt=\"Coop Logo\"> <p>Dear "+fullNames+",</p> <p>We thank you for choosing Cooperative Bank as your preferred bank. We are pleased to advise that your account is now open with the following details:</p> <ul> <li><strong>Account Name:</strong> "+uppercaseFullNames+"</li> <li><strong>Account Type:</strong> COOPERATIVE BANK SAVINGS - "+productType+"</li> <li><strong>Account Number:</strong> "+accNumberRes+"</li> <li><strong>Account Currency:</strong> KENYAN SHILLINGS</li> </ul> <img src=\""+coopLogofooter+"\" alt=\"Coop Logo\"></div></body></html>";	 	                	     
 	                        String emailSubject ="Welcome to Cooperative Bank of Kenya";
                         	
                         	SendEmailRequest SendEmailData = createSendEmailRequest(retailCustomerCreate.getPersonalPartyBasicDetails().getEmail(), emailSubject, emailMessage);
