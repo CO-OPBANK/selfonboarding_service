@@ -327,11 +327,11 @@ return soapResponse;
             SOAPElement relationshipDetailElem = relationshipDetailsElem.addChildElement("RelationshipDetail", post);
 
             // Add elements for RelationshipDetail
-            relationshipDetailElem.addChildElement("RelatedEntityType", post).addTextNode("Retail");
-            relationshipDetailElem.addChildElement("RelatedEntity", post).addTextNode("Customer");
-            relationshipDetailElem.addChildElement("RelatedIternalPartyID", post).addTextNode("105145538");
-            relationshipDetailElem.addChildElement("RelationshipType", post).addTextNode("BROTHER");
-            relationshipDetailElem.addChildElement("RelationshipCategory", post).addTextNode("Social");
+            relationshipDetailElem.addChildElement("RelatedEntityType", post).addTextNode("");
+            relationshipDetailElem.addChildElement("RelatedEntity", post).addTextNode("");
+            relationshipDetailElem.addChildElement("RelatedIternalPartyID", post).addTextNode("");
+            relationshipDetailElem.addChildElement("RelationshipType", post).addTextNode("");
+            relationshipDetailElem.addChildElement("RelationshipCategory", post).addTextNode("");
             relationshipDetailElem.addChildElement("PercentageOfShareHolding", post).addTextNode("");
             relationshipDetailElem.addChildElement("GuardCode", post).addTextNode("");
             relationshipDetailElem.addChildElement("ShareHolderType", post).addTextNode("");
@@ -401,7 +401,7 @@ return soapResponse;
 	      SOAPElement employmentDetailsElem = retailCustomerCreateRq.addChildElement("EmploymentDetails", post);
 	
 	      // Add elements for EmploymentDetails (include all elements)
-	      employmentDetailsElem.addChildElement("EmploymentType", post).addTextNode("Employed");
+	      employmentDetailsElem.addChildElement("EmploymentType", post).addTextNode("Unemployed");
 	      employmentDetailsElem.addChildElement("EmploymentStatus", post).addTextNode("");
 	      employmentDetailsElem.addChildElement("EmpType", post).addTextNode("CURRENT_EMPLOYMENT");
 	      employmentDetailsElem.addChildElement("IncomeNature", post).addTextNode("Stable");
@@ -433,9 +433,9 @@ return soapResponse;
 		   //kycDetailsElem.addChildElement("KYCRecertificationDate", post).addTextNode(kycDetails.getKycRecertificationDate());
 		   kycDetailsElem.addChildElement("MainSourceOfFunds", post).addTextNode(personalPartyBasicDetails.getSourceOfFunds());
 		   kycDetailsElem.addChildElement("OtherSourceOfFunds", post).addTextNode("");
-		   kycDetailsElem.addChildElement("OtherBankName", post).addTextNode("KCB BANK");
+		   kycDetailsElem.addChildElement("OtherBankName", post).addTextNode("");
 		   kycDetailsElem.addChildElement("PreferredCommunicationLanguage", post).addTextNode("");
-		   kycDetailsElem.addChildElement("CustomerRating", post).addTextNode("3");
+		   kycDetailsElem.addChildElement("CustomerRating", post).addTextNode("");
 		   
 //		   kycDetailsElem.addChildElement("KYCStatus", post).addTextNode("");
 //		   kycDetailsElem.addChildElement("KYCDate", post).addTextNode("");
@@ -452,7 +452,7 @@ return soapResponse;
 	
 			// Add elements for TaxDetails (include all elements)
 			taxDetailsElem.addChildElement("TaxDeductionTable", post).addTextNode("");
-			taxDetailsElem.addChildElement("TaxCountry", post).addTextNode("KE");
+			taxDetailsElem.addChildElement("TaxCountry", post).addTextNode("");
 			taxDetailsElem.addChildElement("TaxExempt", post).addTextNode("");
 			taxDetailsElem.addChildElement("ForeignTaxReportingIndicator", post).addTextNode("");
 			taxDetailsElem.addChildElement("ForeignTaxReportinStatus", post).addTextNode("");
