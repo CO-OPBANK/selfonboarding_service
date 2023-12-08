@@ -1370,7 +1370,7 @@ public class CommonMethodsController {
 	    String phoneNo = retailCustomerCreate.getPersonalPartyBasicDetails().getPhone();
 	    String emailAdd = retailCustomerCreate.getPersonalPartyBasicDetails().getEmail();
 	    String cityBirth = retailCustomerCreate.getPersonalPartyBasicDetails().getCityTown();
-	    String physicalAdd = retailCustomerCreate.getPersonalPartyBasicDetails().getPhysicalState();
+	    String physicalAdd = retailCustomerCreate.getPersonalPartyBasicDetails().getStreetRoadName();
 
 	    String occupation = retailCustomerCreate.getPersonalPartyBasicDetails().getOccupationStatus();
 	    
@@ -1513,7 +1513,7 @@ public class CommonMethodsController {
 	                	    String phoneNo = retailCustomerCreate.getPersonalPartyBasicDetails().getPhone();
 	                	    String emailAdd = retailCustomerCreate.getPersonalPartyBasicDetails().getEmail();
 	                	    String cityBirth = retailCustomerCreate.getPersonalPartyBasicDetails().getCityTown();
-	                	    String physicalAdd = retailCustomerCreate.getPersonalPartyBasicDetails().getPhysicalState();
+	                	    String physicalAdd = retailCustomerCreate.getPersonalPartyBasicDetails().getStreetRoadName();
 	                	   
 	                	    String occupation = retailCustomerCreate.getPersonalPartyBasicDetails().getOccupationStatus();
 	                	    
