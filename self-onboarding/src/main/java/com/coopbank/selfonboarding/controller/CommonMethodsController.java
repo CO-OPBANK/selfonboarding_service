@@ -1394,7 +1394,7 @@ public class CommonMethodsController {
 	            retailCustomerCreate.getPersonalPartyBasicDetails().getFullName(),
 	            retailCustomerCreate.getPersonalPartyBasicDetails().getVerifiedPhoto(),
 	            retailCustomerCreate.getPersonalPartyBasicDetails().getVerifiedPhoto(),
-	            "SOLE SIGNATORY/" + retailCustomerCreate.getPersonalPartyBasicDetails().getFullName() +
+	            "SOLE SIGNATORY/" + uppercaseFullNames +
 	                    "/" + retailCustomerCreate.getPersonalPartyBasicDetails().getIdNumber());
 
 	    getSigningDetailsData(signingDetailsRequestData);
@@ -1535,7 +1535,7 @@ public class CommonMethodsController {
 	                        		accNumberRes,retailCustomerCreate.getPersonalPartyBasicDetails().getFullName(),  
 	                        		retailCustomerCreate.getPersonalPartyBasicDetails().getVerifiedPhoto(),  
 	                        		retailCustomerCreate.getPersonalPartyBasicDetails().getVerifiedPhoto(),  
-	                        		"SOLE SIGNATORY/"+retailCustomerCreate.getPersonalPartyBasicDetails().getFullName()+"/"+retailCustomerCreate.getPersonalPartyBasicDetails().getIdNumber());
+	                        		"SOLE SIGNATORY/"+uppercaseFullNames+"/"+retailCustomerCreate.getPersonalPartyBasicDetails().getIdNumber());
 	                        getSigningDetailsData(SigningDetailsRequestData);
 	                        
 	                        CreateDocumentRequest createDocumentRequestData =  createCreateDocumentRequest(
