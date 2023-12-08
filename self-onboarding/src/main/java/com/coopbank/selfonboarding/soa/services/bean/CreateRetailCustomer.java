@@ -193,7 +193,14 @@ return soapResponse;
             personalPartyBasicDetailsElem.addChildElement("RelationshipOpeningDate", post).addTextNode("");
             personalPartyBasicDetailsElem.addChildElement("SectorCode", post).addTextNode("RE02");
             personalPartyBasicDetailsElem.addChildElement("SubSectorCode", post).addTextNode("RE0201");
-            personalPartyBasicDetailsElem.addChildElement("RiskRating", post).addTextNode("LOW");
+            String pepAssociate = retailCustomerCreate.getPersonalPartyBasicDetails().getPepAssociate();
+            String pepAssociateVal = null;
+            if (pepAssociate.equals("Y")) {
+            	pepAssociateVal = "HIGH";	
+    	    }else {
+    	    	pepAssociateVal = "LOW";
+    	    }
+            personalPartyBasicDetailsElem.addChildElement("RiskRating", post).addTextNode(pepAssociateVal);
             personalPartyBasicDetailsElem.addChildElement("CustomerStatus", post).addTextNode("");
             personalPartyBasicDetailsElem.addChildElement("CustomerId", post).addTextNode("");
             personalPartyBasicDetailsElem.addChildElement("CBKSector", post).addTextNode( "SC01");
