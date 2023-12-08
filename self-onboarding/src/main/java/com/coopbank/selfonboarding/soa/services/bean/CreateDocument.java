@@ -202,7 +202,7 @@ return soapResponse;
                 // Add elements for documentData
                 documentDataElem.addChildElement("indexId", body).addTextNode("870");
                 documentDataElem.addChildElement("indexType", body).addTextNode("S");
-                documentDataElem.addChildElement("indexValue", body).addTextNode("Identification Document");
+                documentDataElem.addChildElement("indexValue", body).addTextNode("Mandate");
                 
                 SOAPElement accDocumentDataElem = documentDatasElem.addChildElement("NGOAddDocDataDefCriteriaDataBDO", body);
                 
