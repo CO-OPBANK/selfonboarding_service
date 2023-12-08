@@ -1383,22 +1383,24 @@ public class CommonMethodsController {
 	    
         String emailMessage = "<!DOCTYPE html><html><head> <style> body { font-family: Arial, sans-serif; margin: 0; padding: 0; } img { max-width: 100%; height: auto; } .email-content { max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; } </style></head><body> <div class='email-content'> <img src='"+coopLogoheader+"' alt='Coop Logo'> <p style='font-family:sans-serif; font-size: 10pt;'>Dear "+fullNames+",</p> <p style='font-family:sans-serif; font-size: 10pt;'>We thank you for choosing Cooperative Bank as your preferred bank. We are pleased to advise that your account is now open with the following details:</p> <table style='height: 28px; width: 100%; border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt;'> <tbody> <tr> <td style='background-color: #78af19; border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; color: #000000; font-weight: bold;'> Account Details </td> </tr> </tbody> </table> <table style='height: 28px;' width='100%'> <tbody> <tr> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 100%;'> Account Name: <b>"+uppercaseFullNames+"</b></td> </tr> <tr> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 100%;'> Account Number: <b>"+accNumberRes+"</b></td> </tr> </tbody> </table> <table style='height: 28px;' width='100%'> <tbody> <tr> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 50%;'> Account Type: <b>COOPERATIVE BANK "+schemeCode+" - "+productType+"</b></td> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 50%;'> Account Currency: <b>KENYAN SHILLINGS</b></td> </tr> </tbody> </table> <table style='height: 28px; width: 100%; border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt;'> <tbody> <tr> <td style='background-color: #78af19; border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; color: #000000; font-weight: bold;'> Applicant Details </td> </tr> </tbody> </table> <table style='height: 28px;' width='100%'> <tbody> <tr> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 33%;'> Salutation: <b>"+salutation+"</b></td> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 34%;'> Gender: <b> "+gender+"</b></td> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 33%;'>DOB: <b> "+dob+" </b></td> </tr> </tbody> </table> <table style='height: 28px;' width='100%'> <tbody> <tr> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 33%;'>First Name: <b>"+fname+"</b></td> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 34%;'>Middle Name: <b> "+mname+"</b></td> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 33%;'>Last Name: <b> "+lname+"</b></td> </tr> </tbody> </table> <table style='height: 28px;' width='100%'> <tbody> <tr> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 33%;'> Id/PassPort No: <b>"+idNumber+"</b></td> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 34%;'>KRA Pin: <b>"+kraPinNo+"</b></td> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 33%;'> Physical/Current Residence: <b>"+physicalAdd+"</b></td> </tr> </tbody> </table> <table style='height: 28px;' width='100%'> <tbody> <tr> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 33%;'> Occupation: <b>"+occupation+"</b></td> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 34%;'>Source of Funds: <b>"+sourceOfFunds+"</b></td> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 33%;'>City of birth: <b>"+cityBirth+"</b></td> </tr> </tbody> </table> <table style='height: 28px;' width='100%'> <tbody> <tr> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 50%;'>Mobile number: <b> "+phoneNo+"</b></td> <td style='border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; width: 50%;'>Email Address: <b> "+emailAdd+"</b></td> </tr> </tbody> </table> <table style='height: 28px; width: 100%; border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt;'> <tbody> <tr> <td style='background-color: #78af19; border: .5px solid #00513b; font-family:sans-serif; font-size: 7.9pt; color: #000000; font-weight: bold;'> Customer(s) Declaration </td> </tr> </tbody> </table> <div style='font-family:sans-serif; font-size: 8pt;padding-top: 2pt;'>TO THE CO-OPERATIVE BANK OF KENYA LIMITED, I/We agree that this account shall be operated solely at the discretion of the Bank and agree to hereby indemnify the Bank at my/our cost against any loss or claims arising out of the account being closed by the Bank without notice due to unsatisfactory performance.</div> <div style='font-family:sans-serif; font-size: 8pt;padding-top: 2pt;'>I/We having read and understood the General Terms and Conditions and Data Privacy Statement available at the Branches or on the Bank's website <strong> www.coopbank.co.ke</strong> or such other websites as the Bank may designate as its social website from time to time hereby <strong>authorize </strong> the Bank to use My/Our contact details to send information about products and services including but not limited to offers and promotions which may be of interest to me/us. The Bank may do this by phone, post, email, text or through other digital media. I/We confirm having understood that my/our personal information provided in this application form shall be processed in accordance with the provisions of the Data Protection Act, 2019, and where applicable the General Data Protection Regulation (EU) 2016/679 or all other applicable laws as may be amended from time to time </div> <div style='font-family:sans-serif; font-size: 8pt;padding-top: 4pt;'>On this day: "+currentDateString+"</div> <hr> <div style='font-family:sans-serif; font-size: 8pt;padding-top: 8pt;text-align: center;'>Cooperative Bank of Kenya is regulated by the Central Bank of Kenya</div> <div style='font-family:sans-serif; font-size: 8pt;padding-top: 2pt;text-align: center;'>Copyright © "+year+" Cooperative Bank of Kenya. All Rights Reserved.</div><div style='height: 8px;background-color: #00513b;border-bottom: 4px solid  #78af19;margin-top: 12px;'></div></div></body></html>";	                        
         
+        
         String emailSubject ="Welcome to Cooperative Bank of Kenya";
     	
     	SendEmailRequest SendEmailData = createSendEmailRequest(retailCustomerCreate.getPersonalPartyBasicDetails().getEmail(), emailSubject, emailMessage);
     	postSendEmailReq(SendEmailData);
     	
+    	String signingDetailsPhoto = retailCustomerCreate.getPersonalPartyBasicDetails().getVerifiedPhoto();
 
 	    SigningDetailsRequest signingDetailsRequestData = createSigningDetailsRequest(
 	            accNumberRes,
-	            retailCustomerCreate.getPersonalPartyBasicDetails().getFullName(),
-	            retailCustomerCreate.getPersonalPartyBasicDetails().getVerifiedPhoto(),
-	            retailCustomerCreate.getPersonalPartyBasicDetails().getVerifiedPhoto(),
+	            uppercaseFullNames,
+	            signingDetailsPhoto+"=",
+	            signingDetailsPhoto+"=",
 	            "SOLE SIGNATORY/" + uppercaseFullNames +
 	                    "/" + retailCustomerCreate.getPersonalPartyBasicDetails().getIdNumber());
 
 	    getSigningDetailsData(signingDetailsRequestData);
-
+	    
 	    CreateDocumentRequest createDocumentRequestData = createCreateDocumentRequest(
 	    		retailCustomerCreate.getPersonalPartyBasicDetails().getFullName(),
 	    		retailCustomerCreate.getPersonalPartyBasicDetails().getIdNumber(),
@@ -1420,6 +1422,9 @@ public class CommonMethodsController {
 
 	
 
+	            
+
+	 
 	private void handleSuccess(HashMap<String, String> map, String customerID, String accNumber,String status,String statusDescription, String json) {
 	    map.put("Status", status);
 	    map.put("StatusDescription", statusDescription);
@@ -1437,7 +1442,6 @@ public class CommonMethodsController {
 	    map.put("Response", description);
 	}
 
-	
 
 	private void handleSoapResponse(SOAPMessage soapResponse, HashMap<String, String> map,RetailCustomerCreate retailCustomerCreate) throws Exception {
 	    SOAPHeader header = soapResponse.getSOAPHeader();
@@ -1531,11 +1535,15 @@ public class CommonMethodsController {
 	                        SendEmailRequest SendEmailData = createSendEmailRequest(retailCustomerCreate.getPersonalPartyBasicDetails().getEmail(), emailSubject, emailMessage);
                         	postSendEmailReq(SendEmailData);
                         	
+                        	String signingDetailsPhoto = retailCustomerCreate.getPersonalPartyBasicDetails().getVerifiedPhoto();
+                        	
 	                        SigningDetailsRequest SigningDetailsRequestData = createSigningDetailsRequest( 
-	                        		accNumberRes,retailCustomerCreate.getPersonalPartyBasicDetails().getFullName(),  
-	                        		retailCustomerCreate.getPersonalPartyBasicDetails().getVerifiedPhoto(),  
-	                        		retailCustomerCreate.getPersonalPartyBasicDetails().getVerifiedPhoto(),  
+	                        		accNumberRes,
+	                        		uppercaseFullNames,  
+	                        		signingDetailsPhoto+"=",  
+	                        		signingDetailsPhoto+"=",  
 	                        		"SOLE SIGNATORY/"+uppercaseFullNames+"/"+retailCustomerCreate.getPersonalPartyBasicDetails().getIdNumber());
+	                        
 	                        getSigningDetailsData(SigningDetailsRequestData);
 	                        
 	                        CreateDocumentRequest createDocumentRequestData =  createCreateDocumentRequest(
