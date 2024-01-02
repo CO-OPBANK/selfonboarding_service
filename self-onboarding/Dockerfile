@@ -1,6 +1,16 @@
-FROM openjdk:11-jdk-alpine
-COPY settings.xml /root/.m2/settings.xml
-EXPOSE 8080
+# Start with a base image containing Java runtime
+FROM openjdk:11
+# Add Maintainer Info
+LABEL maintainer="Philip Nyatichi <pnyatichi@co-opbank.co.ke>"
+
+#Build image
+# Make port 8080 available to the world outside this container
+
+# The application's jar file
 ARG JAR_FILE=target/*.jar
-COPY ./target/self-onboarding-0.0.1.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+
+# Add the application's jar to the container
+COPY ./target/self-onboarding.jar app.jar
+
+#Run jar file
+ENTRYPOINT ["java","-jar","app.jar"]
