@@ -27,17 +27,15 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
-
-		<dependency>
-	         <groupId>org.springframework.boot</groupId>
-	         <artifactId>spring-boot-starter-data-jpa</artifactId>
-	      </dependency>
-
-	      <dependency>
-	         <groupId>com.oracle.database.jdbc</groupId>
-	         <artifactId>ojdbc10</artifactId>
-	         <version>19.18.0.0</version>
-	      </dependency>
+<!--		<dependency>-->
+<!--	         <groupId>org.springframework.boot</groupId>-->
+<!--	         <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--	      </dependency>-->
+<!--	      <dependency>-->
+<!--	         <groupId>com.oracle.database.jdbc</groupId>-->
+<!--	         <artifactId>ojdbc10</artifactId>-->
+<!--	         <version>19.18.0.0</version>-->
+<!--	      </dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -55,11 +53,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		 <dependency>
-		    <groupId>javax.persistence</groupId>
-		    <artifactId>javax.persistence-api</artifactId>
-		    <version>2.2</version> <!-- Replace with the appropriate version -->
-		</dependency>
+<!--		 <dependency>-->
+<!--		    <groupId>javax.persistence</groupId>-->
+<!--		    <artifactId>javax.persistence-api</artifactId>-->
+<!--		    <version>2.2</version> &lt;!&ndash; Replace with the appropriate version &ndash;&gt;-->
+<!--		</dependency>-->
 
 	     <dependency>
          <groupId>org.junit.jupiter</groupId>
