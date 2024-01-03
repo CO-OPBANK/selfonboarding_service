@@ -15,10 +15,14 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  dockerbuild:
+    name: DockerBuild
     runs-on: ubuntu-latest
-
+    
+    # Make outputs SHORT_SHA available to next bump job
+    outputs:
+      short_sha: ${{ steps.getbuildversion.outputs.buildversion }}
+      
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 11
@@ -30,10 +34,9 @@ jobs:
     - name: Build with Maven
       run: mvn clean package --file self-onboarding/pom.xml
 
-    - name: List Downloaded Components
+    - name: List Built Gererated Components
       run: |-
         pwd && ls -lrt && ls -lrt self-onboarding/target
-
     -
       name: Set up QEMU
       uses: docker/setup-qemu-action@v3
@@ -46,6 +49,11 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # Create image tag
+    - name: Add SHORT_SHA env property with HEAD
+      id: getbuildversion
+      run: echo "::set-output name=buildversion::$(echo api-${GITHUB_SHA::4})"
     -
       name: Build and push
       uses: docker/build-push-action@v3
@@ -54,9 +62,51 @@ jobs:
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
-          ${{ secrets.DOCKERHUB_USERNAME }}/selfonboarding:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/selfonboarding:${{ steps.getbuildversion.outputs.buildversion }}
         cache-from: ${{ secrets.DOCKERHUB_USERNAME }}/selfonboarding
-        cache-to: ${{ secrets.DOCKERHUB_USERNAME }}/selfonboarding   
+        cache-to: ${{ secrets.DOCKERHUB_USERNAME }}/selfonboarding
+
+
+  deploy-sit:
+    name: Deploy-SIT
+    runs-on: ubuntu-latest
+    environment: 'sit'
+    needs: dockerbuild
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          repository: CO-OPBANK/deployments
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.MY_GIT_TOKEN }}
+          
+      - name: Version Image to Current Deployment
+        run: |-
+          pwd && ls -lrt
+          cd sit/selfonboarding-service
+          pwd && ls -lrt
+          currentimage=$(cat deployment.yaml | grep image: | awk -F ':' '{print $NF}')
+          echo print currentimage $currentimage
+          echo print newimage ${{ needs.dockerbuild.outputs.short_sha }}
+          sed -i s#$currentimage#${{ needs.dockerbuild.outputs.short_sha }}#g deployment.yaml
+          cat deployment.yaml | grep image:
+          
+      - name: Commit files
+        run: |
+          git config --local user.email ${{github.event.pusher.email}}
+          git config --local user.name ${{ github.event.pusher.name }}
+          git add .
+          git commit -a -m "updated image version to : ${{ needs.dockerbuild.outputs.short_sha }}: Message: ${{ github.event.head_commit.message }}:Repo:${{ github.event.head_commit.url}}"
+          
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          repository: CO-OPBANK/deployments
+          branch: master
+          github_token: ${{ secrets.MY_GIT_TOKEN }}
+    
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
