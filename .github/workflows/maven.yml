@@ -32,7 +32,7 @@ jobs:
 
     - name: List Downloaded Components
       run: |-
-        pwd && ls -lrt && ls -lrt self-onboarding
+        pwd && ls -lrt && ls -lrt self-onboarding/target
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
