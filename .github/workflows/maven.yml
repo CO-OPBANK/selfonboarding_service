@@ -38,7 +38,7 @@ jobs:
     - run: mkdir staging && cp self-onboarding/target/*.jar staging
     - uses: actions/download-artifact@v4
       with:
-        name: Package
+        name: self-onboarding.jar
         path: self-onboarding/staging
         run: pwd && ls -lrt && ls -lrt staging
 
