@@ -8,7 +8,7 @@ For building and running the application you need:
 3. Oracle
 
 #Running the application locally
-There are several ways to run a Spring Boot application on your local machine. One way is to execute the main method in the com.samdev.mulikevs.RolebasedJwtApplication class from your IDE.
+There are several ways to run a Spring Boot application on your local machine. One way is to execute the main method in the com.coopbank.selfonboarding.SelfOnboardingApplication class from your IDE.
 
 Alternatively you can use the Spring Boot Maven plugin like so:
 
