@@ -39,7 +39,7 @@ jobs:
     - uses: actions/download-artifact@v4
       with:
         name: self-onboarding
-        path: staging
+        path: self-onboarding/staging
         run: pwd && ls -lrt && ls -lrt staging
 
 
