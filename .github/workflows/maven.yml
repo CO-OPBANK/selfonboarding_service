@@ -34,7 +34,16 @@ jobs:
     - name: Build with Maven
       run: mvn clean package --file self-onboarding/pom.xml
 
-    - name: List Built Gererated Components
+    - name: Download artifact
+    - run: mkdir staging && cp self-onboarding/target/*.jar staging
+    - uses: actions/download-artifact
+      with:
+        name: self-onboarding
+        path: staging
+        run: pwd && ls -lrt && ls -lrt staging
+
+
+    - name: List Built Generated Components
       run: |-
         pwd && ls -lrt && ls -lrt self-onboarding/target
     -
