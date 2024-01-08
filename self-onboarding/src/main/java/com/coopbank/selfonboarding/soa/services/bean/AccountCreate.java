@@ -146,6 +146,9 @@ return soapResponse;
             AccountCreateRq.addChildElement("AccountName", ns).addTextNode("");
             AccountCreateRq.addChildElement("OperationMode", ns).addTextNode("");
             AccountCreateRq.addChildElement("GenLedgerSubHeadCode", ns).addTextNode("");
+
+            //Added BsmCode and defaulted 01
+            AccountCreateRq.addChildElement("BsmCode", ns).addTextNode("01");
             
             SOAPElement RelatedPartyRecReq = AccountCreateRq.addChildElement("RelatedPartyRec", ns);
             RelatedPartyRecReq.addChildElement("RelationshipType", ns).addTextNode("");
